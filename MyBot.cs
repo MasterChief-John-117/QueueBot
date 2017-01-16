@@ -45,16 +45,27 @@ namespace DiscoBot
             commands.CreateCommand("qme")
                 .Do(async (e) =>
                 {
-                    if (e.Message.User.Roles.Select(user => user.Name).Intersect(queue).Any() == false)
+                    if (Array.Exists(queue, element => element == e.Message.User.Name) == false)
                     {
-                        queue.Concat(Enumerable.Repeat(e.Message.User.Name,1)).ToArray();
+                        queue = (queue ?? Enumerable.Empty<string>()).Concat(new[] { e.Message.User.Name }).ToArray();
+                        await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
                     }
-                    await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue");
+                    else await e.Channel.SendMessage("You're already in the queue!");
+                });
+            commands.CreateCommand("queue")
+                .Do(async (e) =>
+                {
+                    string message = "";
+                    foreach (String value in queue)
+                    {
+                        message += value;
+                    }
+                    await e.Message.Channel.SendMessage(message);
                 });
 
             discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C151Zg.xFJ3sZLXgAa8pC6PPuHH2WBH4yk", TokenType.Bot);
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C16K1A.9XBV4QGUvttt9Qug0Ltpy_4knDY", TokenType.Bot);
             });
         }
 
