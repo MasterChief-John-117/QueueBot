@@ -60,6 +60,7 @@ namespace DiscoBot
                     {
                         message += (value + ", ");
                     }
+                    if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
                     await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
                 });
             commands.CreateCommand("next")
