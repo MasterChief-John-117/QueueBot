@@ -33,21 +33,28 @@ namespace DiscoBot
 
             discord.UsingCommands(x =>
             {
-                x.PrefixChar = '!';
+                x.PrefixChar = '=';
                 x.AllowMentionPrefix = false;
             });
 
             commands = discord.GetService<CommandService>();
 
-            commands.CreateCommand("hello")
+            //queue commands
+
+            string[] queue = { };
+            commands.CreateCommand("qme")
                 .Do(async (e) =>
                 {
-                    await e.Channel.SendMessage("Hello.");
+                    if (e.Message.User.Roles.Select(user => user.Name).Intersect(queue).Any() == false)
+                    {
+                        queue.Concat(Enumerable.Repeat(e.Message.User.Name,1)).ToArray();
+                    }
+                    await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue");
                 });
 
             discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C13qlw.r6EucqYbLrN6KpkI7ulK3KoUoQo", TokenType.Bot);
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C151Zg.xFJ3sZLXgAa8pC6PPuHH2WBH4yk", TokenType.Bot);
             });
         }
 
