@@ -58,14 +58,28 @@ namespace DiscoBot
                     string message = "";
                     foreach (String value in queue)
                     {
-                        message += value;
+                        message += (value + ", ");
                     }
-                    await e.Message.Channel.SendMessage(message);
+                    await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
+                });
+            commands.CreateCommand("next")
+                .Do(async (e) =>
+                {
+                    string up = queue[0];
+                    string next = "";
+                    queue = queue.Where(w => w != queue[0]).ToArray();
+                    IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
+                    foreach (User user in users)
+                    {
+                        next = "<@" + user.Id + ">";
+                    }
+
+                    await e.Message.Channel.SendMessage(next + " is up!");
                 });
 
             discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C16K1A.9XBV4QGUvttt9Qug0Ltpy_4knDY", TokenType.Bot);
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C16q5g.UsKTr1oY_alnmOBPTHlNsQkI3dM", TokenType.Bot);
             });
         }
 
