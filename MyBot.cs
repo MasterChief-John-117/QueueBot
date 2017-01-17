@@ -41,13 +41,16 @@ namespace DiscoBot
 
             //queue commands
 
-            string[] queue = { };
+            //Dictionary <  Guid, LinkedList < User >> queues = new Dictionary < Guid, LinkedList< User >>();
+
+            LinkedList<string> queue = new LinkedList<string>();
+
             commands.CreateCommand("qme")
                 .Do(async (e) =>
                 {
-                    if (Array.Exists(queue, element => element == e.Message.User.Name) == false)
+                    if (!queue.Contains(e.Message.User.Name))
                     {
-                        queue = (queue ?? Enumerable.Empty<string>()).Concat(new[] { e.Message.User.Name }).ToArray();
+                        queue.AddLast(e.Message.User.Name);
                         await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
                     }
                     else await e.Channel.SendMessage("You're already in the queue!");
@@ -66,9 +69,9 @@ namespace DiscoBot
             commands.CreateCommand("next")
                 .Do(async (e) =>
                 {
-                    string up = queue[0];
+                    string up = queue.First();
                     string next = "";
-                    queue = queue.Where(w => w != queue[0]).ToArray();
+                    queue.RemoveFirst();
                     IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
                     foreach (User user in users)
                     {
@@ -80,7 +83,7 @@ namespace DiscoBot
 
             discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C16q5g.UsKTr1oY_alnmOBPTHlNsQkI3dM", TokenType.Bot);
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C16xkA.lxtWq-fhb9ex7WnKbKaKBVHVo1g", TokenType.Bot); //token outdated
             });
         }
 
