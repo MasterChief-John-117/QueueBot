@@ -14,6 +14,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Threading;
+using Nito.AsyncEx;
 
 namespace QueueBot
 {
@@ -80,8 +81,11 @@ namespace QueueBot
                     {
                         next = "<@" + user.Id + ">";
                     }
-
-                    await e.Message.Channel.SendMessage(next + " is up!");
+                    if (queue.Any() == true)
+                    {
+                        await e.Message.Channel.SendMessage(
+                            "No one is in the queue! Use `=qme` to get placed in the queue.");}
+                    else await e.Message.Channel.SendMessage(next + " is up!");
                 });
 
             discord.ExecuteAndWait(async () =>
