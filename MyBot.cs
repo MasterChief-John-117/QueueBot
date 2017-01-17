@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using System.Timers;
 using System.Threading;
 
-namespace DiscoBot
+namespace QueueBot
 {
 
     class MyBot
@@ -45,7 +45,8 @@ namespace DiscoBot
 
             LinkedList<string> queue = new LinkedList<string>();
 
-            commands.CreateCommand("qme")
+            discord.GetService<CommandService>().CreateCommand("qme")
+                .Alias(new String[] {"add"})
                 .Do(async (e) =>
                 {
                     if (!queue.Contains(e.Message.User.Name))
@@ -55,7 +56,8 @@ namespace DiscoBot
                     }
                     else await e.Channel.SendMessage("You're already in the queue!");
                 });
-            commands.CreateCommand("queue")
+            discord.GetService<CommandService>().CreateCommand("queue")
+                .Alias(new String[] {"q"})
                 .Do(async (e) =>
                 {
                     string message = "";
@@ -66,7 +68,8 @@ namespace DiscoBot
                     if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
                     await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
                 });
-            commands.CreateCommand("next")
+            discord.GetService<CommandService>().CreateCommand("next")
+                .Alias(new String[] {"up"})
                 .Do(async (e) =>
                 {
                     string up = queue.First();
@@ -83,7 +86,7 @@ namespace DiscoBot
 
             discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C16xkA.lxtWq-fhb9ex7WnKbKaKBVHVo1g", TokenType.Bot); //token outdated
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C1_5uw.5syPhpLx6tELGT21EawMIzlyKe8", TokenType.Bot); //token outdated
             });
         }
 
