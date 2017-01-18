@@ -14,29 +14,30 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="MyBot.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MyBot.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="90" column="44" lean-forward="false" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
+            <state relative-caret-position="131">
+              <caret line="101" column="39" lean-forward="false" selection-start-line="101" selection-start-column="39" selection-end-line="101" selection-end-column="39" />
               <folding>
-                <marker date="1484683948788" expanded="true" signature="17:394" ph="..." />
-                <marker date="1484683948788" expanded="true" signature="414:3478" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="433:3476" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="527:3345" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="582:693" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="735:845" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="923:1050" ph="/* queue commands ... */" />
-                <marker date="1484683948788" expanded="true" signature="1265:1661" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="1345:1557" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="1811:2237" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="1922:2017" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="2387:3121" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="2702:2799" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="2844:3023" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="3171:3333" ph="{...}" />
-                <marker date="1484683948788" expanded="true" signature="3408:3470" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="17:394" ph="..." />
+                <marker date="1484703899215" expanded="true" signature="414:3806" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="433:3804" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="527:3673" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="582:693" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="735:845" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="923:1050" ph="/* queue commands ... */" />
+                <marker date="1484703899215" expanded="true" signature="1265:1661" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="1345:1557" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="1811:2268" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="1960:2048" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="2418:3152" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="2733:2830" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="2875:3054" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="3314:3508" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="3558:3661" ph="{...}" />
+                <marker date="1484703899215" expanded="true" signature="3736:3798" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -102,10 +103,6 @@
               <option name="myItemId" value="Queuebot (1 project)" />
               <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QueueBot (with warnings)" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
         <option name="show-file-system" value="false" />
@@ -156,12 +153,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484678691247</updated>
-      <workItem from="1484678700281" duration="3204000" />
+      <workItem from="1484678700281" duration="3470000" />
+      <workItem from="1484689303713" duration="2669000" />
+      <workItem from="1484694619345" duration="3341000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3204000" />
+    <option name="totallyTimeSpent" value="9480000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -177,24 +176,24 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors in solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors in solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="UnitTesting" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="UnitTesting" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24304539" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39966273" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -206,6 +205,32 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/MyBot.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1484703899215" expanded="true" signature="17:394" ph="..." />
+            <marker date="1484703899215" expanded="true" signature="414:3806" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="433:3804" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="527:3673" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="582:693" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="735:845" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="923:1050" ph="/* queue commands ... */" />
+            <marker date="1484703899215" expanded="true" signature="1265:1661" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1345:1557" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1811:2268" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1960:2048" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2418:3152" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2733:2830" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2875:3054" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3314:3508" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3558:3661" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3736:3798" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Program.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
@@ -221,25 +246,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MyBot.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="90" column="44" lean-forward="false" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1484683948788" expanded="true" signature="17:394" ph="..." />
-            <marker date="1484683948788" expanded="true" signature="414:3478" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="433:3476" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="527:3345" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="582:693" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="735:845" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="923:1050" ph="/* queue commands ... */" />
-            <marker date="1484683948788" expanded="true" signature="1265:1661" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="1345:1557" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="1811:2237" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="1922:2017" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="2387:3121" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="2702:2799" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="2844:3023" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="3171:3333" ph="{...}" />
-            <marker date="1484683948788" expanded="true" signature="3408:3470" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="17:394" ph="..." />
+            <marker date="1484703899215" expanded="true" signature="414:3806" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="433:3804" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="527:3673" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="582:693" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="735:845" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="923:1050" ph="/* queue commands ... */" />
+            <marker date="1484703899215" expanded="true" signature="1265:1661" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1345:1557" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1811:2268" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1960:2048" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2418:3152" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2733:2830" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2875:3054" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3314:3508" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3558:3661" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3736:3798" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <marker date="1484679111572" expanded="true" signature="19:144" ph="..." />
+            <marker date="1484679111572" expanded="true" signature="164:295" ph="{...}" />
+            <marker date="1484679111572" expanded="true" signature="184:293" ph="{...}" />
+            <marker date="1484679111572" expanded="true" signature="230:287" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <marker date="1484679111572" expanded="true" signature="19:144" ph="..." />
+            <marker date="1484679111572" expanded="true" signature="164:295" ph="{...}" />
+            <marker date="1484679111572" expanded="true" signature="184:293" ph="{...}" />
+            <marker date="1484679111572" expanded="true" signature="230:287" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyBot.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="101" column="39" lean-forward="false" selection-start-line="101" selection-start-column="39" selection-end-line="101" selection-end-column="39" />
+          <folding>
+            <marker date="1484703899215" expanded="true" signature="17:394" ph="..." />
+            <marker date="1484703899215" expanded="true" signature="414:3806" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="433:3804" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="527:3673" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="582:693" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="735:845" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="923:1050" ph="/* queue commands ... */" />
+            <marker date="1484703899215" expanded="true" signature="1265:1661" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1345:1557" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1811:2268" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="1960:2048" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2418:3152" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2733:2830" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="2875:3054" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3314:3508" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3558:3661" ph="{...}" />
+            <marker date="1484703899215" expanded="true" signature="3736:3798" ph="{...}" />
           </folding>
         </state>
       </provider>

@@ -61,10 +61,11 @@ namespace QueueBot
                 .Alias(new String[] {"q"})
                 .Do(async (e) =>
                 {
+                    bool ran = false;
                     string message = "";
                     foreach (String value in queue)
                     {
-                        message += (value + ", ");
+                        message += (value);
                     }
                     if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
                     await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
@@ -87,10 +88,18 @@ namespace QueueBot
                             "No one is in the queue! Use `=qme` to get placed in the queue.");}
                     else await e.Message.Channel.SendMessage(next + " is up!");
                 });
+            discord.GetService<CommandService>().CreateCommand("leave")
+                .Alias(new String[] {"dqme", "leave"})
+                .Do(async (e) =>
+                {
+                    queue.Remove(e.Message.User.Name);
+                    await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
+
+                });
 
             discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C1_5uw.5syPhpLx6tELGT21EawMIzlyKe8", TokenType.Bot); //token outdated
+                await discord.Connect("", TokenType.Bot); //token outdated
             });
         }
 
