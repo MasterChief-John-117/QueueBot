@@ -92,8 +92,12 @@ namespace QueueBot
                 .Alias(new String[] {"dqme", "leave"})
                 .Do(async (e) =>
                 {
-                    queue.Remove(e.Message.User.Name);
-                    await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
+                    if (queue.Contains(e.Message.User.Name))
+                    {
+                        queue.Remove(e.Message.User.Name);
+                        await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
+                    }
+                    else await e.Message.Channel.SendMessage("You weren't in the queue!");
 
                 });
 
