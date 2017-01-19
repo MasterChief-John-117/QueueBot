@@ -27,6 +27,7 @@ namespace QueueBot
         CommandService commands;
         private static System.Timers.Timer antiSpam;
         public CommandEventArgs c;
+        public LinkedList<string> usingq;
 
 
         public MyBot()
@@ -60,9 +61,9 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
-                    if (!queue.Contains(e.Message.User.Name))
+                    if (!usingq.Contains(e.Message.User.Name))
                     {
-                        queue.AddLast(e.Message.User.Name);
+                        usingq.AddLast(e.Message.User.Name);
                         await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
                     }
                     else await e.Channel.SendMessage("You're already in the queue!");
@@ -71,9 +72,9 @@ namespace QueueBot
                 .Alias(new String[] {"q"})
                 .Do(async (e) =>
                 {
-                    bool ran = false;
                     string message = "";
-                    foreach (String value in queue)
+                    setOrGetQueue(e);
+                    foreach (String value in usingq)
                     {
                         message += (value);
                     }
@@ -84,27 +85,29 @@ namespace QueueBot
                 .Alias(new String[] {"up"})
                 .Do(async (e) =>
                 {
-                    string up = queue.First();
+                    setOrGetQueue(e);
+                    string up = usingq.First();
                     string next = "";
-                    queue.RemoveFirst();
+                    usingq.RemoveFirst();
                     IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
                     foreach (User user in users)
                     {
                         next = "<@" + user.Id + ">";
                     }
-                    if (queue.Any() == true)
-                    {
-                        await e.Message.Channel.SendMessage(
-                            "No one is in the queue! Use `=qme` to get placed in the queue.");}
-                    else await e.Message.Channel.SendMessage(next + " is up!");
+                    //if (usingq.Any() == true)
+                    //{
+                    //    await e.Message.Channel.SendMessage(
+                    //        "No one is in the queue! Use `=qme` to get placed in the queue.");}
+                    /*else*/ await e.Message.Channel.SendMessage(next + " is up!");
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
                 .Alias(new String[] {"dqme", "leave"})
                 .Do(async (e) =>
                 {
-                    if (queue.Contains(e.Message.User.Name))
+                    setOrGetQueue(e);
+                    if (usingq.Contains(e.Message.User.Name))
                     {
-                        queue.Remove(e.Message.User.Name);
+                        usingq.Remove(e.Message.User.Name);
                         await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
                     }
                     else await e.Message.Channel.SendMessage("You weren't in the queue!");
@@ -126,15 +129,13 @@ namespace QueueBot
         {
             if (queues.ContainsKey(e.Message.Server.ToString()))
             {
-                Console.WriteLine("It has it");
-
+                usingq = queues[e.Message.Server.ToString()];
             }
             else
             {
-                Console.WriteLine("Didn't have it");
                 LinkedList<string> queue = new LinkedList<string>();
-
                 queues.Add(e.Message.Server.ToString(), queue);
+                usingq = queues[e.Message.Server.ToString()];
             }
         }
 
