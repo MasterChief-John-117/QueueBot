@@ -1,21 +1,9 @@
-﻿//MyBot.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using System.Collections;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Net;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Timers;
-using System.Threading;
-using Nito.AsyncEx;
-using System.Timers;
+
 
 namespace QueueBot
 {
@@ -25,7 +13,6 @@ namespace QueueBot
         Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
         DiscordClient discord;
         CommandService commands;
-        private static System.Timers.Timer antiSpam;
         public CommandEventArgs c;
         public LinkedList<string> usingq;
 
@@ -42,6 +29,8 @@ namespace QueueBot
             {
                 x.PrefixChar = '=';
                 x.AllowMentionPrefix = false;
+                x.HelpMode = HelpMode.Public;
+
             });
 
             commands = discord.GetService<CommandService>();
@@ -86,19 +75,25 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
-                    string up = usingq.First();
-                    string next = "";
-                    usingq.RemoveFirst();
-                    IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
-                    foreach (User user in users)
+
+                    if (usingq.Count() == 0)
                     {
-                        next = "<@" + user.Id + ">";
+                        await e.Message.Channel.SendMessage(
+                            "No one is in the queue! Use `=qme` to get placed in the queue.");
                     }
-                    //if (usingq.Any() == true)
-                    //{
-                    //    await e.Message.Channel.SendMessage(
-                    //        "No one is in the queue! Use `=qme` to get placed in the queue.");}
-                    /*else*/ await e.Message.Channel.SendMessage(next + " is up!");
+                    else if (usingq.Count() != 0)
+                    {
+                        string up = usingq.First();
+                        string next = "";
+                        IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
+                        foreach (User user in users)
+                        {
+                            next = "<@" + user.Id + ">";
+                        }
+                        await e.Message.Channel.SendMessage(next + " is up!");
+                        usingq.RemoveFirst();
+
+                    }
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
                 .Alias(new String[] {"dqme", "leave"})
