@@ -15,14 +15,19 @@ using System.Text.RegularExpressions;
 using System.Timers;
 using System.Threading;
 using Nito.AsyncEx;
+using System.Timers;
 
 namespace QueueBot
 {
 
     class MyBot
     {
+        Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
         DiscordClient discord;
         CommandService commands;
+        private static System.Timers.Timer antiSpam;
+        public CommandEventArgs c;
+
 
         public MyBot()
         {
@@ -40,6 +45,9 @@ namespace QueueBot
 
             commands = discord.GetService<CommandService>();
 
+
+
+
             //queue commands
 
             //Dictionary <  Guid, LinkedList < User >> queues = new Dictionary < Guid, LinkedList< User >>();
@@ -47,9 +55,11 @@ namespace QueueBot
             LinkedList<string> queue = new LinkedList<string>();
 
             discord.GetService<CommandService>().CreateCommand("qme")
+
                 .Alias(new String[] {"add"})
                 .Do(async (e) =>
                 {
+                    setOrGetQueue(e);
                     if (!queue.Contains(e.Message.User.Name))
                     {
                         queue.AddLast(e.Message.User.Name);
@@ -111,5 +121,22 @@ namespace QueueBot
         {
             Console.WriteLine(e.Message);
         }
+
+        public void setOrGetQueue(CommandEventArgs e)
+        {
+            if (queues.ContainsKey(e.Message.Server.ToString()))
+            {
+                Console.WriteLine("It has it");
+
+            }
+            else
+            {
+                Console.WriteLine("Didn't have it");
+                LinkedList<string> queue = new LinkedList<string>();
+
+                queues.Add(e.Message.Server.ToString(), queue);
+            }
+        }
+
     }
 }

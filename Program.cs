@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QueueBot;
+using Discord;
 
 namespace DiscoBot
 {
@@ -13,6 +14,7 @@ namespace DiscoBot
         static void Main(string[] args)
         {
             MyBot bot = new MyBot();
+
         }
     }
 }
