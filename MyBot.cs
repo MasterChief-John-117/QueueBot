@@ -133,9 +133,7 @@ namespace QueueBot
                     if (e.Message.User.ServerPermissions.BanMembers)
                     {
                         blacklist.Add(e.Message.Text.Substring(15));
-                        blacklist.ForEach(el => Console.WriteLine(el));
-
-                        await e.Message.Channel.SendMessage("Requested user has been added to *The Blacklist* ó_ò \n If you want them un-blacklisted, please contact @MasterChief_John-117#1911");
+                        await e.Message.Channel.SendMessage("Requested user has been added to *The Blacklist* ó_ò \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
                     }
                     else
                     {
