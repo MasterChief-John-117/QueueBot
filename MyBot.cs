@@ -50,27 +50,40 @@ namespace QueueBot
                 .Alias(new String[] {"add"})
                 .Do(async (e) =>
                 {
-                    setOrGetQueue(e);
-                    if (!usingq.Contains(e.Message.User.Name))
+                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
-                        usingq.AddLast(e.Message.User.Name);
-                        await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
+                        setOrGetQueue(e);
+                        if (!usingq.Contains(e.Message.User.Name))
+                        {
+                            usingq.AddLast(e.Message.User.Name);
+                            await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
+                        }
+                        else await e.Channel.SendMessage("You're already in the queue!");
                     }
-                    else await e.Channel.SendMessage("You're already in the queue!");
+                    else
+                    {
+                        await e.Message.Delete();
+                    }
                 });
             discord.GetService<CommandService>().CreateCommand("queue")
                 .Alias(new String[] {"q"})
-                .Do(async (e) =>
-                {
-                    string message = "";
-                    setOrGetQueue(e);
-                    foreach (String value in usingq)
+                .Do(async (e) => {
+                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
-                        message += (value);
+                        string message = "";
+                        setOrGetQueue(e);
+                        foreach (String value in usingq)
+                        {
+                            message += (value);
+                        }
+                        if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
+                        await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
                     }
-                    if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
-                    await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
-                });
+                    else
+                    {
+                        await e.Message.Delete();
+                    }
+            });
             discord.GetService<CommandService>().CreateCommand("next")
                 .Alias(new String[] {"up"})
                 .Do(async (e) =>
@@ -148,7 +161,7 @@ namespace QueueBot
 
            discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C2ANeA.K6OW1fC6EE5pFinZt4zTpTJhkPE", TokenType.Bot); //token outdated
+                await discord.Connect("", TokenType.Bot); //token outdated
             });
         }
 
