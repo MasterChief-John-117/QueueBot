@@ -97,16 +97,23 @@ namespace QueueBot
                     }
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
-                .Alias(new String[] {"dqme", "leave"})
+                .Alias(new String[] {"dqme"})
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
-                    if (usingq.Contains(e.Message.User.Name))
+                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
-                        usingq.Remove(e.Message.User.Name);
-                        await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
+                        if (usingq.Contains(e.Message.User.Name))
+                        {
+                            usingq.Remove(e.Message.User.Name);
+                            await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
+                        }
+                        else await e.Message.Channel.SendMessage("You weren't in the queue!");
                     }
-                    else await e.Message.Channel.SendMessage("You weren't in the queue!");
+                    else
+                    {
+                        await e.Message.Delete();
+                    }
 
                 });
 
@@ -119,7 +126,9 @@ namespace QueueBot
 
                     if (e.Message.User.ServerPermissions.BanMembers)
                     {
-                        blacklist.Add($"{e.GetArg("userId")}, ");
+                        blacklist.Add(e.Message.Text.Substring(15));
+                        blacklist.ForEach(el => Console.WriteLine(el));
+
                         await e.Message.Channel.SendMessage("Requested user has been added to *The Blacklist* ó_ò \n If you want them un-blacklisted, please contact @MasterChief_John-117#1911");
                     }
                     else
