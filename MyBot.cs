@@ -74,7 +74,7 @@ namespace QueueBot
                         setOrGetQueue(e);
                         foreach (String value in usingq)
                         {
-                            message += (value);
+                            message += (value + ", ");
                         }
                         if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
                         await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
