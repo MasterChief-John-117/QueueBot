@@ -76,25 +76,31 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
-
-                    if (usingq.Count() == 0)
+                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
-                        await e.Message.Channel.SendMessage(
-                            "No one is in the queue! Use `=qme` to get placed in the queue.");
-                    }
-                    else if (usingq.Count() != 0)
-                    {
-                        string up = usingq.First();
-                        string next = "";
-                        IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
-                        foreach (User user in users)
+                        if (usingq.Count() == 0)
                         {
-                            next = "<@" + user.Id + ">";
+                            await e.Message.Channel.SendMessage(
+                                "No one is in the queue! Use `=qme` to get placed in the queue.");
                         }
-                        await e.Message.Channel.SendMessage(next + " is up!");
-                        usingq.RemoveFirst();
+                        else if (usingq.Count() != 0)
+                        {
+                            string up = usingq.First();
+                            string next = "";
+                            IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
+                            foreach (User user in users)
+                            {
+                                next = "<@" + user.Id + ">";
+                            }
+                            await e.Message.Channel.SendMessage(next + " is up!");
+                            usingq.RemoveFirst();
 
+                        }}
+                    else
+                    {
+                        await e.Message.Delete();
                     }
+
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
                 .Alias(new String[] {"dqme"})
@@ -150,7 +156,7 @@ namespace QueueBot
 
         public void Log(object sender, LogMessageEventArgs e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(DateTime.Now + ": " + e.Message);
         }
 
         public void setOrGetQueue(CommandEventArgs e)
