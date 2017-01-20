@@ -2,6 +2,7 @@
 Thumbs.db
 ehthumbs.db
 
+
 # Folder config file
 Desktop.ini
 
@@ -16,6 +17,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Other Files
+blacklist.txt
 
 # =========================
 # Operating System Files
