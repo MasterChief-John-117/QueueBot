@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Discord;
 using Discord.Commands;
+using Discord.Modules;
+
 
 
 namespace QueueBot
@@ -13,8 +15,10 @@ namespace QueueBot
         Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
         DiscordClient discord;
         CommandService commands;
+        ModuleManager manager;
         public CommandEventArgs c;
         public LinkedList<string> usingq;
+        public List<string> blacklist = new List<string>();
 
 
         public MyBot()
@@ -36,16 +40,13 @@ namespace QueueBot
             commands = discord.GetService<CommandService>();
 
 
+                //queue commands
 
+                //Dictionary <  Guid, LinkedList < User >> queues = new Dictionary < Guid, LinkedList< User >>();
 
-            //queue commands
-
-            //Dictionary <  Guid, LinkedList < User >> queues = new Dictionary < Guid, LinkedList< User >>();
-
-            LinkedList<string> queue = new LinkedList<string>();
+                LinkedList<string> queue = new LinkedList<string>();
 
             discord.GetService<CommandService>().CreateCommand("qme")
-
                 .Alias(new String[] {"add"})
                 .Do(async (e) =>
                 {
@@ -109,9 +110,32 @@ namespace QueueBot
 
                 });
 
-            discord.ExecuteAndWait(async () =>
+
+            //ADMIN COMMANDS
+            discord.GetService<CommandService>().CreateCommand("blacklistUser")
+                .Parameter("userId", ParameterType.Required)
+                .Do(async (e) =>
+                {
+
+                    if (e.Message.User.ServerPermissions.BanMembers)
+                    {
+                        blacklist.Add($"{e.GetArg("userId")}, ");
+                        await e.Message.Channel.SendMessage("Requested user has been added to *The Blacklist* ó_ò \n If you want them un-blacklisted, please contact @MasterChief_John-117#1911");
+                    }
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.Channel.SendMessage("You don't have permssions to use that command!");
+                    }
+
+                });
+                
+
+
+
+           discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("", TokenType.Bot); //token outdated
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C2ANeA.K6OW1fC6EE5pFinZt4zTpTJhkPE", TokenType.Bot); //token outdated
             });
         }
 

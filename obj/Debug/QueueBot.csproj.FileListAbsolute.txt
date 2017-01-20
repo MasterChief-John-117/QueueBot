@@ -28,3 +28,4 @@ C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\RestSharp.xml
 C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.csprojResolveAssemblyReference.cache
 C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.exe
 C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.pdb
+C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\Discord.Net.Modules.dll
