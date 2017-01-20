@@ -13,6 +13,7 @@ namespace QueueBot
     class MyBot
     {
         Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
+        public static Dictionary<string, int> blackused = new Dictionary<string, int>();
         DiscordClient discord;
         CommandService commands;
         ModuleManager manager;
@@ -25,7 +26,7 @@ namespace QueueBot
         public MyBot()
         {
 
-            blacktimer = new System.Timers.Timer(30 * 1000);
+            blacktimer = new System.Timers.Timer(60 * 1000);
             blacktimer.Elapsed += userBlacklist.sendOut;
             blacktimer.AutoReset = true;
             blacktimer.Enabled = true;
@@ -72,7 +73,11 @@ namespace QueueBot
                     }
                     else
                     {
+                        blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
+                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
+                                                   blackused[e.Message.User.Id.ToString()] +
+                                                   "` time. If you try `3` times, mods will be alterted");
                     }
                 });
             discord.GetService<CommandService>().CreateCommand("queue")
@@ -91,8 +96,11 @@ namespace QueueBot
                     }
                     else
                     {
+                        blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                    }
+                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
+                                                         blackused[e.Message.User.Id.ToString()] +
+                                                         "` time. If you try `3` times, mods will be alterted");                    }
             });
             discord.GetService<CommandService>().CreateCommand("next")
                 .Alias(new String[] {"up"})
@@ -121,8 +129,11 @@ namespace QueueBot
                         }}
                     else
                     {
+                        blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                    }
+                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
+                                                         blackused[e.Message.User.Id.ToString()] +
+                                                         "` time. If you try `3` times, mods will be alterted");                    }
 
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
@@ -141,8 +152,11 @@ namespace QueueBot
                     }
                     else
                     {
+                        blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                    }
+                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
+                                                         blackused[e.Message.User.Id.ToString()] +
+                                                         "` time. If you try `3` times, mods will be alterted");                    }
 
                 });
 
@@ -150,6 +164,7 @@ namespace QueueBot
             //ADMIN COMMANDS
             discord.GetService<CommandService>().CreateCommand("blacklistUser")
                 .Parameter("userId", ParameterType.Required)
+                .Description("Moderator only")
                 .Do(async (e) =>
                 {
 
@@ -161,9 +176,32 @@ namespace QueueBot
                     else
                     {
                         await e.Message.Delete();
-                        await e.Message.Channel.SendMessage("You don't have permssions to use that command!");
+                        await e.Message.User.SendMessage("You don't have permssions to use that command! (`blacklistUser`)");
                     }
 
+                });
+
+
+            //MY COMMANDS
+
+            discord.GetService<CommandService>()
+                .CreateCommand("allqs")
+                .Do(async (e) =>
+                {
+                    if (e.Message.User.Id.ToString() == "169918990313848832")
+                    {
+                        string message = "";
+                        foreach (KeyValuePair<string, LinkedList<string>> kvp in queues)
+                        {
+                            message = message + kvp.Key + ": " + kvp.Value.Count() + " member(s) in queue \n";
+                        }
+                        await e.Message.Channel.SendMessage(message);
+                    }
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");
+                    }
                 });
                 
 
