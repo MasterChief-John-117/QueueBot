@@ -18,11 +18,21 @@ namespace QueueBot
         ModuleManager manager;
         public CommandEventArgs c;
         public LinkedList<string> usingq;
-        public List<string> blacklist = new List<string>();
+        public static List<string> blacklist = userBlacklist.bringIn().ToList<string>();
+        public System.Timers.Timer blacktimer;
 
 
         public MyBot()
         {
+
+            blacktimer = new System.Timers.Timer(30 * 1000);
+            blacktimer.Elapsed += userBlacklist.sendOut;
+            blacktimer.AutoReset = true;
+            blacktimer.Enabled = true;
+
+
+
+
             discord = new DiscordClient(x =>
             {
                 x.LogLevel = LogSeverity.Info;
