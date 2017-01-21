@@ -209,6 +209,7 @@ namespace QueueBot
 
            discord.ExecuteAndWait(async () =>
             {
+                await discord.Connect(Token.token, TokenType.Bot); //token outdated
             });
         }
 

@@ -20,6 +20,7 @@ $RECYCLE.BIN/
 
 #Other Files
 blacklist.txt
+Token.cs
 
 # =========================
 # Operating System Files
