@@ -209,7 +209,6 @@ namespace QueueBot
 
            discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C2PmRQ.GFYDBrR3DG1nY56hPvO9pBcNaao", TokenType.Bot); //token outdated
             });
         }
 

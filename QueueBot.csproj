@@ -81,6 +81,7 @@
     <Compile Include="PermissionsLevel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="userBlacklist.cs" />
   </ItemGroup>
   <ItemGroup>
