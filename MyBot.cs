@@ -256,13 +256,38 @@ namespace QueueBot
                         await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
                     }
                 });
-                
+            discord.GetService<CommandService>()
+                .CreateCommand("getq")
+                .Do(async (e) =>
+                {
+                    if (e.Message.User.Id.ToString() == Ids.ownerId)
+                    {
+
+                        string message = "";
+                        if (queues.ContainsKey(e.Message.Text.Substring(6)))
+                        {
+                            usingq = queues[e.Message.Text.Substring(6)];
+                            foreach (String value in usingq)
+                            {
+                                message += (value + ", ");
+                            }
+                            if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
+                            await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
+                        }
+                    }
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
+                    }
+                });
 
 
 
-           discord.ExecuteAndWait(async () =>
+
+            discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect(Token.token, TokenType.Bot); //takes token from Token.cs
+                await discord.Connect(Token.token, TokenType.Bot); //takes token from Settings.cs
             });
         }
 
