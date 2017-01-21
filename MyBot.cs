@@ -185,7 +185,7 @@ namespace QueueBot
             //MY COMMANDS
 
             discord.GetService<CommandService>()
-                .CreateCommand("allqs")
+                .CreateCommand("listall")
                 .Do(async (e) =>
                 {
                     if (e.Message.User.Id.ToString() == "169918990313848832")
@@ -209,7 +209,7 @@ namespace QueueBot
 
            discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect("", TokenType.Bot); //token outdated
+                await discord.Connect("MjcwNDIzMDM2MzIxMDcxMTA0.C2PmRQ.GFYDBrR3DG1nY56hPvO9pBcNaao", TokenType.Bot); //token outdated
             });
         }
 

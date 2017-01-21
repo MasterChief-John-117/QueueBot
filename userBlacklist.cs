@@ -12,6 +12,7 @@ namespace QueueBot
             string[] list =  System.IO.File.ReadAllLines(@"C:\Users\maste\Documents\GitHub\Queuebot\blacklist.txt");
             foreach (string str in list)
             {
+                MyBot.blackused.Clear();
                 MyBot.blackused.Add(str, 0);
             }
             Console.WriteLine(DateTime.Now + " Blacklist introduced with " + list.Length + " users");
