@@ -72,20 +72,7 @@ namespace QueueBot
                     }
                     else
                     {
-                        blackused[e.Message.User.Id.ToString()]++;
-                        e.Message.Delete();
-                        if (blackused[e.Message.User.Id.ToString()] < 3)
-                        {
-                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
-                                                             blackused[e.Message.User.Id.ToString()] +
-                                                             "` times. If you try `3` times, mods will be alterted");
-                        }
-                        if (blackused[e.Message.User.Id.ToString()] == 3)
-                        {
-                            await e.Message.User.SendMessage(
-                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
-                            Console.WriteLine(e.Message.User.Name + " has used a command `3` times post blacklist on server " + e.Message.Server.Name);
-                        }
+                        userBlacklist.commandUsed(e);
                     }
                 });
             discord.GetService<CommandService>().CreateCommand("queue")
@@ -105,22 +92,7 @@ namespace QueueBot
                     }
                     else
                     {
-                        blackused[e.Message.User.Id.ToString()]++;
-                        e.Message.Delete();
-                        if (blackused[e.Message.User.Id.ToString()] < 3)
-                        {
-                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
-                                                             blackused[e.Message.User.Id.ToString()] +
-                                                             "` times. If you try `3` times, mods will be alterted");
-                        }
-                        if (blackused[e.Message.User.Id.ToString()] == 3)
-                        {
-                            await e.Message.User.SendMessage(
-                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
-                            Console.WriteLine(e.Message.User.Name +
-                                              " has used a command `3` times post blacklist on server " +
-                                              e.Message.Server.Name);
-                        }
+                        userBlacklist.commandUsed(e);
                     }
 
                 });
@@ -153,22 +125,7 @@ namespace QueueBot
                     }
                     else
                     {
-                        blackused[e.Message.User.Id.ToString()]++;
-                        e.Message.Delete();
-                        if (blackused[e.Message.User.Id.ToString()] < 3)
-                        {
-                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
-                                                             blackused[e.Message.User.Id.ToString()] +
-                                                             "` times. If you try `3` times, mods will be alterted");
-                        }
-                        if (blackused[e.Message.User.Id.ToString()] == 3)
-                        {
-                            await e.Message.User.SendMessage(
-                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
-                            Console.WriteLine(e.Message.User.Name +
-                                              " has used a command `3` times post blacklist on server " +
-                                              e.Message.Server.Name);
-                        }
+                        userBlacklist.commandUsed(e);
                     }
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
@@ -187,21 +144,7 @@ namespace QueueBot
                     }
                     else
                     {
-                        e.Message.Delete();
-                        blackused[e.Message.User.Id.ToString()]++;
-                        if (blackused[e.Message.User.Id.ToString()] < 3)
-                        {
-                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
-                                                             blackused[e.Message.User.Id.ToString()] +
-                                                             "` times. If you try `3` times, mods will be alterted");
-                        }
-                        if (blackused[e.Message.User.Id.ToString()] == 3)
-                        {
-                            await e.Message.User.SendMessage(
-                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
-                            Console.WriteLine(e.Message.User.Name + " has used a command `3` times post blacklist on server " + e.Message.Server.Name);
-                        }
-
+                        userBlacklist.commandUsed(e);
                     }
 
                 });

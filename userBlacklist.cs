@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using Discord;
+using Discord.Commands;
 
 namespace QueueBot
 
@@ -34,6 +35,26 @@ namespace QueueBot
         public static void useHandler()
         {
 
+        }
+
+        public static async void commandUsed(CommandEventArgs e)
+        {
+            MyBot.blackused[e.Message.User.Id.ToString()]++;
+            e.Message.Delete();
+            if (MyBot.blackused[e.Message.User.Id.ToString()] < 3)
+            {
+                await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
+                                                 MyBot.blackused[e.Message.User.Id.ToString()] +
+                                                 "` times. If you try `3` times, mods will be alterted");
+            }
+            if (MyBot.blackused[e.Message.User.Id.ToString()] == 3)
+            {
+                await e.Message.User.SendMessage(
+                    "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
+                Console.WriteLine(e.Message.User.Name +
+                                  " has used a command `3` times post blacklist on server " +
+                                  e.Message.Server.Name);
+            }
         }
 
 
