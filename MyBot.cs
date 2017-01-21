@@ -14,6 +14,7 @@ namespace QueueBot
     {
         Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
         public static Dictionary<string, int> blackused = new Dictionary<string, int>();
+        public static Dictionary<string, int> useruse = new Dictionary<string, int>();
         DiscordClient discord;
         CommandService commands;
         public LinkedList<string> usingq;
@@ -314,6 +315,11 @@ namespace QueueBot
                 queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
                 usingq = queues[e.Message.Server.ToString()]; //select new queue
             }
+        }
+
+        public void antispam(CommandEventArgs e)
+        {
+            string username = e.Message.User.Name;
         }
 
 
