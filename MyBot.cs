@@ -72,7 +72,7 @@ namespace QueueBot
                     else
                     {
                         blackused[e.Message.User.Id.ToString()]++;
-                        await e.Message.Delete();
+                        e.Message.Delete();
                         if (blackused[e.Message.User.Id.ToString()] < 3)
                         {
                             await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
@@ -105,7 +105,7 @@ namespace QueueBot
                     else
                     {
                         blackused[e.Message.User.Id.ToString()]++;
-                        await e.Message.Delete();
+                        e.Message.Delete();
                         if (blackused[e.Message.User.Id.ToString()] < 3)
                         {
                             await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
@@ -153,7 +153,7 @@ namespace QueueBot
                     else
                     {
                         blackused[e.Message.User.Id.ToString()]++;
-                        await e.Message.Delete();
+                        e.Message.Delete();
                         if (blackused[e.Message.User.Id.ToString()] < 3)
                         {
                             await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
@@ -186,8 +186,8 @@ namespace QueueBot
                     }
                     else
                     {
+                        e.Message.Delete();
                         blackused[e.Message.User.Id.ToString()]++;
-                        await e.Message.Delete();
                         if (blackused[e.Message.User.Id.ToString()] < 3)
                         {
                             await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
@@ -243,6 +243,7 @@ namespace QueueBot
                 {
                     if (e.Message.User.Id.ToString() == Ids.ownerId)
                     {
+
                         string message = "";
                         foreach (KeyValuePair<string, LinkedList<string>> kvp in queues)
                         {
