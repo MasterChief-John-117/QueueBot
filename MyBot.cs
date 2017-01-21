@@ -258,15 +258,17 @@ namespace QueueBot
                 });
             discord.GetService<CommandService>()
                 .CreateCommand("getq")
+                .Parameter("selected", ParameterType.Required)
                 .Do(async (e) =>
                 {
                     if (e.Message.User.Id.ToString() == Ids.ownerId)
                     {
 
                         string message = "";
-                        if (queues.ContainsKey(e.Message.Text.Substring(6)))
+                        if (queues.ContainsKey(e.GetArg("selected")))
                         {
-                            usingq = queues[e.Message.Text.Substring(6)];
+                            usingq = queues[e.GetArg("selected")];
+                            Console.WriteLine("Using queue " + usingq.ToString());
                             foreach (String value in usingq)
                             {
                                 message += (value + ", ");
