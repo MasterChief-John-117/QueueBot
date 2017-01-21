@@ -31,6 +31,12 @@ namespace QueueBot
             Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
         }
 
+        public static void useHandler()
+        {
+
+        }
+
+
 
     }
 }

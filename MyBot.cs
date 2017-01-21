@@ -16,8 +16,6 @@ namespace QueueBot
         public static Dictionary<string, int> blackused = new Dictionary<string, int>();
         DiscordClient discord;
         CommandService commands;
-        ModuleManager manager;
-        public CommandEventArgs c;
         public LinkedList<string> usingq;
         public static List<string> blacklist = userBlacklist.bringIn().ToList<string>();
         public System.Timers.Timer blacktimer;
@@ -75,14 +73,24 @@ namespace QueueBot
                     {
                         blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
-                                                   blackused[e.Message.User.Id.ToString()] +
-                                                   "` time. If you try `3` times, mods will be alterted");
+                        if (blackused[e.Message.User.Id.ToString()] < 3)
+                        {
+                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
+                                                             blackused[e.Message.User.Id.ToString()] +
+                                                             "` times. If you try `3` times, mods will be alterted");
+                        }
+                        if (blackused[e.Message.User.Id.ToString()] == 3)
+                        {
+                            await e.Message.User.SendMessage(
+                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
+                            Console.WriteLine(e.Message.User.Name + " has used a command `3` times post blacklist on server " + e.Message.Server.Name);
+                        }
                     }
                 });
             discord.GetService<CommandService>().CreateCommand("queue")
                 .Alias(new String[] {"q"})
-                .Do(async (e) => {
+                .Do(async (e) =>
+                {
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
                         string message = "";
@@ -98,10 +106,23 @@ namespace QueueBot
                     {
                         blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
-                                                         blackused[e.Message.User.Id.ToString()] +
-                                                         "` time. If you try `3` times, mods will be alterted");                    }
-            });
+                        if (blackused[e.Message.User.Id.ToString()] < 3)
+                        {
+                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
+                                                             blackused[e.Message.User.Id.ToString()] +
+                                                             "` times. If you try `3` times, mods will be alterted");
+                        }
+                        if (blackused[e.Message.User.Id.ToString()] == 3)
+                        {
+                            await e.Message.User.SendMessage(
+                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
+                            Console.WriteLine(e.Message.User.Name +
+                                              " has used a command `3` times post blacklist on server " +
+                                              e.Message.Server.Name);
+                        }
+                    }
+
+                });
             discord.GetService<CommandService>().CreateCommand("next")
                 .Alias(new String[] {"up"})
                 .Do(async (e) =>
@@ -118,7 +139,8 @@ namespace QueueBot
                         {
                             string up = usingq.First();
                             string next = "";
-                            IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users).Where(u => u.Name == up);
+                            IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users)
+                                .Where(u => u.Name == up);
                             foreach (User user in users)
                             {
                                 next = "<@" + user.Id + ">";
@@ -126,15 +148,27 @@ namespace QueueBot
                             await e.Message.Channel.SendMessage(next + " is up!");
                             usingq.RemoveFirst();
 
-                        }}
+                        }
+                    }
                     else
                     {
                         blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
-                                                         blackused[e.Message.User.Id.ToString()] +
-                                                         "` time. If you try `3` times, mods will be alterted");                    }
-
+                        if (blackused[e.Message.User.Id.ToString()] < 3)
+                        {
+                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
+                                                             blackused[e.Message.User.Id.ToString()] +
+                                                             "` times. If you try `3` times, mods will be alterted");
+                        }
+                        if (blackused[e.Message.User.Id.ToString()] == 3)
+                        {
+                            await e.Message.User.SendMessage(
+                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
+                            Console.WriteLine(e.Message.User.Name +
+                                              " has used a command `3` times post blacklist on server " +
+                                              e.Message.Server.Name);
+                        }
+                    }
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
                 .Alias(new String[] {"dqme"})
@@ -154,9 +188,20 @@ namespace QueueBot
                     {
                         blackused[e.Message.User.Id.ToString()]++;
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You've been blacklisted! This is your `" +
-                                                         blackused[e.Message.User.Id.ToString()] +
-                                                         "` time. If you try `3` times, mods will be alterted");                    }
+                        if (blackused[e.Message.User.Id.ToString()] < 3)
+                        {
+                            await e.Message.User.SendMessage("You've been blacklisted! You've tried `" +
+                                                             blackused[e.Message.User.Id.ToString()] +
+                                                             "` times. If you try `3` times, mods will be alterted");
+                        }
+                        if (blackused[e.Message.User.Id.ToString()] == 3)
+                        {
+                            await e.Message.User.SendMessage(
+                                "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
+                            Console.WriteLine(e.Message.User.Name + " has used a command `3` times post blacklist on server " + e.Message.Server.Name);
+                        }
+
+                    }
 
                 });
 
@@ -168,10 +213,19 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
 
-                    if (e.Message.User.ServerPermissions.BanMembers)
+                    if (e.Message.User.ServerPermissions.BanMembers) //if user can ban members
                     {
-                        blacklist.Add(e.Message.Text.Substring(15));
-                        await e.Message.Channel.SendMessage("Requested user has been added to *The Blacklist* ó_ò \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
+                        if (!(Ids.whitelist.Contains(e.Message.Text.Substring((15)))))
+                        {
+                            blacklist.Add(e.Message.Text.Substring(15));
+                            await e.Message.Channel.SendMessage(
+                                "Requested user has been added to *The Blacklist* ó_ò \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
+                        }
+                        else
+                        {
+                            await e.Message.Channel.SendMessage(
+                                "Requested  user is on the permanant whitelist \nIf you have an issue, please contact @MasterChief_John-117#1911 for support");
+                        }
                     }
                     else
                     {
@@ -183,24 +237,23 @@ namespace QueueBot
 
 
             //MY COMMANDS
-
             discord.GetService<CommandService>()
                 .CreateCommand("listall")
                 .Do(async (e) =>
                 {
-                    if (e.Message.User.Id.ToString() == "169918990313848832")
+                    if (e.Message.User.Id.ToString() == Ids.ownerId)
                     {
                         string message = "";
                         foreach (KeyValuePair<string, LinkedList<string>> kvp in queues)
                         {
-                            message = message + kvp.Key + ": " + kvp.Value.Count() + " member(s) in queue \n";
+                            message = message + kvp.Key + ": " + kvp.Value.Count() + " member(s) in queue \n"; ///eventually add 2k+ char handling
                         }
                         await e.Message.Channel.SendMessage(message);
                     }
                     else
                     {
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");
+                        await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
                     }
                 });
                 
@@ -209,28 +262,33 @@ namespace QueueBot
 
            discord.ExecuteAndWait(async () =>
             {
-                await discord.Connect(Token.token, TokenType.Bot); //token outdated
+                await discord.Connect(Token.token, TokenType.Bot); //takes token from Token.cs
             });
         }
 
+
+        //Conole logging
         public void Log(object sender, LogMessageEventArgs e)
         {
             Console.WriteLine(DateTime.Now + ": " + e.Message);
         }
 
+        //select queue from Dictionary
         public void setOrGetQueue(CommandEventArgs e)
         {
-            if (queues.ContainsKey(e.Message.Server.ToString()))
+            if (queues.ContainsKey(e.Message.Server.ToString())) //if it exists
             {
-                usingq = queues[e.Message.Server.ToString()];
+                usingq = queues[e.Message.Server.ToString()]; //select it
             }
             else
             {
-                LinkedList<string> queue = new LinkedList<string>();
-                queues.Add(e.Message.Server.ToString(), queue);
-                usingq = queues[e.Message.Server.ToString()];
+                LinkedList<string> queue = new LinkedList<string>(); //create new queue
+                queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
+                usingq = queues[e.Message.Server.ToString()]; //select new queue
             }
         }
+
+
 
     }
 }
