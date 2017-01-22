@@ -35,7 +35,6 @@ namespace QueueBot
 
         public static async void commandUsed(CommandEventArgs e)
         {
-            if (!MyBot.blackused.ContainsKey(e.Message.User.Id.ToString())) MyBot.blackused.Add(e.Message.User.Id.ToString(), 0);
             MyBot.blackused[e.Message.User.Id.ToString()]++;
             e.Message.Delete();
             if (MyBot.blackused[e.Message.User.Id.ToString()] < 3)
