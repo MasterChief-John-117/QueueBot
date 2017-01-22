@@ -14,12 +14,12 @@ namespace QueueBot
     {
         Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
         public static Dictionary<string, int> blackused = new Dictionary<string, int>();
-        public static Dictionary<string, int> useruse = new Dictionary<string, int>();
         DiscordClient discord;
         CommandService commands;
         public LinkedList<string> usingq;
         public static List<string> blacklist = userBlacklist.bringIn().ToList<string>();
         public System.Timers.Timer blacktimer;
+        public System.Timers.Timer spamtimer;
 
 
         public MyBot()
@@ -29,7 +29,10 @@ namespace QueueBot
             blacktimer.Elapsed += userBlacklist.sendOut;
             blacktimer.AutoReset = true;
             blacktimer.Enabled = true;
-
+            spamtimer = new System.Timers.Timer(10 * 1000);
+            spamtimer.Elapsed += Antispam.decrement;
+            spamtimer.AutoReset = true;
+            spamtimer.Enabled = true;
 
 
 
@@ -62,6 +65,7 @@ namespace QueueBot
                 {
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
+                        Antispam.increment(e);
                         setOrGetQueue(e);
                         if (!usingq.Contains(e.Message.User.Name))
                         {
@@ -261,11 +265,6 @@ namespace QueueBot
                 queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
                 usingq = queues[e.Message.Server.ToString()]; //select new queue
             }
-        }
-
-        public void antispam(CommandEventArgs e)
-        {
-            string username = e.Message.User.Name;
         }
 
 
