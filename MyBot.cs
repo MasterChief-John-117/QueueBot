@@ -159,7 +159,7 @@ namespace QueueBot
 
                     if (e.Message.User.ServerPermissions.BanMembers) //if user can ban members
                     {
-                        if (!(Ids.whitelist.Contains(e.Message.Text.Substring((15)))))
+                        if (!(Ids.whitelist.Contains(e.Message.Text.Substring(15))))
                         {
                             blacklist.Add(e.Message.Text.Substring(15));
                             await e.Message.Channel.SendMessage(
@@ -171,6 +171,7 @@ namespace QueueBot
                                 "Requested  user is on the permanant whitelist \nIf you have an issue, please contact @MasterChief_John-117#1911 for support");
                         }
                     }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
                     else
                     {
                         await e.Message.Delete();
@@ -195,6 +196,7 @@ namespace QueueBot
                         }
                         await e.Message.Channel.SendMessage(message);
                     }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
                     else
                     {
                         await e.Message.Delete();
@@ -222,6 +224,7 @@ namespace QueueBot
                             await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
                         }
                     }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
                     else
                     {
                         await e.Message.Delete();
