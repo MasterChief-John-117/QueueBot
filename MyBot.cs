@@ -17,7 +17,7 @@ namespace QueueBot
         DiscordClient discord;
         CommandService commands;
         private static Discord.Commands.CommandEventArgs e;
-        public static LinkedList<string> usingq = setOrGetQueue(e);
+        public static LinkedList<string> usingq;
         public static List<string> blacklist = userBlacklist.bringIn().ToList<string>();
         public System.Timers.Timer blacktimer;
         public System.Timers.Timer spamtimer;
@@ -257,17 +257,17 @@ namespace QueueBot
         }
 
         //select queue from Dictionary
-        public static LinkedList<string> setOrGetQueue(CommandEventArgs e)
+        public static void setOrGetQueue(CommandEventArgs e)
         {
             if (queues.ContainsKey(e.Message.Server.ToString())) //if it exists
             {
-                return queues[e.Message.Server.ToString()]; //select it
+                usingq =  queues[e.Message.Server.ToString()]; //select it
             }
             else
             {
                 LinkedList<string> queue = new LinkedList<string>(); //create new queue
                 queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
-                return queues[e.Message.Server.ToString()]; //select new queue
+                usingq = queues[e.Message.Server.ToString()]; //select new queue
             }
         }
 

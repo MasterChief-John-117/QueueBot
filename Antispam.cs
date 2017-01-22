@@ -51,7 +51,7 @@ namespace QueueBot
                     {
                         MyBot.blacklist.Add(e.Message.User.Id.ToString());
                         Console.WriteLine(e.Message.User.Name + " on server " + e.Message.Server.Name + " (owner ID: " + e.Message.Server.Owner.Id.ToString() + ") has been blacklisted for spam");
-                        MyBot.usingq = MyBot.setOrGetQueue(e);
+                        MyBot.setOrGetQueue(e);
                         MyBot.usingq.Remove(e.Message.User.Name);
                         await e.Message.User.SendMessage(
                             "We regret to inform you that you have been blacklisted as spam protection. If you feel this was in error, please contact your server moderators and @MasterChief_John-117#1911");
