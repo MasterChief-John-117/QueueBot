@@ -29,7 +29,7 @@ namespace QueueBot
             blacktimer.Elapsed += userBlacklist.sendOut;
             blacktimer.AutoReset = true;
             blacktimer.Enabled = true;
-            spamtimer = new System.Timers.Timer(10 * 1000);
+            spamtimer = new System.Timers.Timer(15 * 1000);
             spamtimer.Elapsed += Antispam.decrement;
             spamtimer.AutoReset = true;
             spamtimer.Enabled = true;
