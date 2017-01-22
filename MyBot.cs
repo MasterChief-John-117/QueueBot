@@ -16,6 +16,7 @@ namespace QueueBot
         public static Dictionary<string, int> blackused = new Dictionary<string, int>();
         DiscordClient discord;
         CommandService commands;
+        private static Discord.Commands.CommandEventArgs e;
         public static LinkedList<string> usingq = setOrGetQueue(e);
         public static List<string> blacklist = userBlacklist.bringIn().ToList<string>();
         public System.Timers.Timer blacktimer;
