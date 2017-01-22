@@ -20,7 +20,7 @@ namespace QueueBot
             if (useruse.ContainsKey(e.Message.User.Id.ToString()))
             {
                 useruse[e.Message.User.Id.ToString()]++;
-                if (useruse[e.Message.User.Id.ToString()] > 3) hasspammed(e);
+                if (useruse[e.Message.User.Id.ToString()] > 2) hasspammed(e);
             }
             else
             {
@@ -43,15 +43,11 @@ namespace QueueBot
         {
             if (!Ids.whitelist.Contains(e.Message.User.Id.ToString()))
             {
-
-
+                useruse[e.Message.User.Id.ToString()] = 0;
                 if (muchspam.ContainsKey(e.Message.User.Id.ToString()))
                 {
                     muchspam[e.Message.User.Id.ToString()]++;
                     if (muchspam[e.Message.User.Id.ToString()] == 2)
-                        await e.Message.User.SendMessage(
-                            "This message has been sent to alert you that our spam detection has picked you up. This is warning number `2`. \nNext time our system flags you, you will be automatically blacklisted as spam protection.");
-                    if (muchspam[e.Message.User.Id.ToString()] == 3)
                     {
                         MyBot.blacklist.Add(e.Message.User.Id.ToString());
                         Console.WriteLine(e.Message.User.Name + " on server " + e.Message.Server.Name + " (owner ID: " + e.Message.Server.Owner.Id.ToString() + ") has been blacklisted for spam");
@@ -64,7 +60,7 @@ namespace QueueBot
                 {
                     muchspam.Add(e.Message.User.Id.ToString(), 1);
                     await e.Message.User.SendMessage(
-                        "This message has been sent to alert you that our spam detection has picked you up. This is warning number `1`. \nYou will recieve one more warning, then be automatically blacklisted as spam protection.");
+                        "This message has been sent to alert you that our spam detection has picked you up. This is your warning. \nNext time our system detects spam, you will be automatically blacklisted.");
                 }
             }
         }

@@ -85,6 +85,7 @@ namespace QueueBot
                 {
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
+                        Antispam.increment(e);
                         string message = "";
                         setOrGetQueue(e);
                         foreach (String value in usingq)
@@ -107,6 +108,7 @@ namespace QueueBot
                     setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
+                        Antispam.increment(e);
                         if (usingq.Count() == 0)
                         {
                             await e.Message.Channel.SendMessage(
@@ -139,6 +141,7 @@ namespace QueueBot
                     setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
+                        Antispam.increment(e);
                         if (usingq.Contains(e.Message.User.Name))
                         {
                             usingq.Remove(e.Message.User.Name);
