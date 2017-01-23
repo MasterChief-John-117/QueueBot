@@ -36,6 +36,7 @@ namespace QueueBot
                 {
                     useruse[used]--;
                 }
+                if (useruse[used] == 0) useruse.Remove(used);
             }
         }
 
