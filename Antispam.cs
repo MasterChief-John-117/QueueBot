@@ -51,12 +51,14 @@ namespace QueueBot
                     {
                         MyBot.blacklist.Add(e.Message.User.Id.ToString());
                         Console.WriteLine(e.Message.User.Name + " on server " + e.Message.Server.Name + " (owner ID: " + e.Message.Server.Owner.Id.ToString() + ") has been blacklisted for spam");
-                        MyBot.setOrGetQueue(e);
-                        MyBot.usingq.Remove(e.Message.User.Name);
                         await e.Message.User.SendMessage(
                             "We regret to inform you that you have been blacklisted as spam protection. If you feel this was in error, please contact your server moderators and @MasterChief_John-117#1911");
+                        await e.Message.Server.Owner.SendMessage(
+                            $"{e.Message.User.Name} has been blacklisted for spam protection. \nIf you feel this was in error, please contact ");
+                        MyBot.setOrGetQueue(e);
+                        MyBot.usingq.Remove(e.Message.User.Name);
                     }
-                }
+                 }
 
                 else
                 {
@@ -68,3 +70,21 @@ namespace QueueBot
         }
     }
 }
+
+/*
+                              __
+                     /\    .-" /
+                    /  ; .'  .'
+                   :   :/  .'
+                    \  ;-.'
+       .--""""--..__/     `.
+     .'           .'    `o  \
+    /                    `   ;
+   :                  \      :
+ .-;        -.         `.__.-'
+:  ;          \     ,   ;
+'._:           ;   :   (
+    \/  .__    ;    \   `-.
+     ;     "-,/_..--"`-..__)
+     '""--.._:
+*/

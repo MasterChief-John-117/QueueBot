@@ -223,7 +223,6 @@ namespace QueueBot
                         if (queues.ContainsKey(e.GetArg("selected")))
                         {
                             usingq = queues[e.GetArg("selected")];
-                            Console.WriteLine("Using queue " + usingq.ToString());
                             foreach (String value in usingq)
                             {
                                 message += (value + ", ");
