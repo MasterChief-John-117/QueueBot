@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Discord;
 using Discord.Commands;
-using Discord.Modules;
 
 
 
@@ -60,14 +59,24 @@ namespace QueueBot
 
                 LinkedList<string> queue = new LinkedList<string>();
 
+            discord.MessageReceived += async (s, m) =>
+            {
+                if (blacklist.Contains(e.Message.User.Id.ToString()) &&
+                    e.Message.Text.StartsWith("=" + allcomms.allcoms.Any()))
+                {
+                    await e.Message.Delete();
+                    //userBlacklist.commandUsed(e);
+                }
+            };
+
             discord.GetService<CommandService>().CreateCommand("qme")
                 .Alias(new String[] {"add"})
                 .Do(async (e) =>
                 {
+                    setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
                         Antispam.increment(e);
-                        setOrGetQueue(e);
                         if (!usingq.Contains(e.Message.User.Name))
                         {
                             usingq.AddLast(e.Message.User.Name);
