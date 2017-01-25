@@ -61,10 +61,10 @@ namespace QueueBot
 
             discord.MessageReceived += async (s, m) =>
             {
-                if (blacklist.Contains(e.Message.User.Id.ToString()) &&
-                    e.Message.Text.StartsWith("=" + allcomms.allcoms.Any()))
+                if (blacklist.Contains(m.Message.User.Id.ToString()) &&
+                    m.Message.Text.StartsWith("=" + allcomms.allcoms.Any()))
                 {
-                    await e.Message.Delete();
+                    await m.Message.Delete();
                     //userBlacklist.commandUsed(e);
                 }
             };
