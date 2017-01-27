@@ -18,3 +18,9 @@ C:\Users\maste\OneDrive\Documents\Bots\QueueBot\QueueBot\obj\Debug\QueueBot.cspr
 C:\Users\maste\OneDrive\Documents\Bots\QueueBot\QueueBot\obj\Debug\QueueBot.exe
 C:\Users\maste\OneDrive\Documents\Bots\QueueBot\QueueBot\obj\Debug\QueueBot.pdb
 C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\QueueBot.exe
+C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.csprojResolveAssemblyReference.cache
+C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\QueueBot.exe.config
+C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\QueueBot.pdb
+C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\Discord.Net.Modules.dll
+C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.exe
+C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.pdb

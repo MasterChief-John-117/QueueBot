@@ -18,7 +18,7 @@ namespace QueueBot
             }
             Console.WriteLine(DateTime.Now + " Blacklist introduced with " + list.Length + " users");
 
-            return System.IO.File.ReadAllLines(@"C:\Users\maste\Documents\GitHub\Queuebot\blacklist.txt");
+            return System.IO.File.ReadAllLines(@"blacklist.txt");
         }
 
         public static void sendOut(Object source, ElapsedEventArgs e)
@@ -28,7 +28,7 @@ namespace QueueBot
             {
                 if (!MyBot.blacklist.Contains(str)) MyBot.blackused.Add(str, 0);
             }
-            System.IO.File.WriteAllLines(@"C:\Users\maste\Documents\GitHub\Queuebot\blacklist.txt", list);
+            System.IO.File.WriteAllLines(@"blacklist.txt", list);
             Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
         }
 
