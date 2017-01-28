@@ -15,20 +15,20 @@ namespace QueueBot
         public static Dictionary<string, int> muchspam = new Dictionary<string, int>();
 
 
-        public static void increment(CommandEventArgs e)
+        public static void increment(CommandEventArgs e) //general antispam count adder
         {
-            if (useruse.ContainsKey(e.Message.User.Id.ToString()))
+            if (useruse.ContainsKey(e.Message.User.Id.ToString())) //if is in the list
             {
-                useruse[e.Message.User.Id.ToString()]++;
-                if (useruse[e.Message.User.Id.ToString()] > 2) hasspammed(e);
+                useruse[e.Message.User.Id.ToString()]++; //increment them
+                if (useruse[e.Message.User.Id.ToString()] > 2) hasspammed(e); //if they've spammed, see how much
             }
             else
             {
-                useruse.Add(e.Message.User.Id.ToString(), 1);
+                useruse.Add(e.Message.User.Id.ToString(), 1); //add them to the list
             }
         }
 
-        public static void decrement(Object source, ElapsedEventArgs e)
+        public static void decrement(Object source, ElapsedEventArgs e) //every n seconds, remove 1 from each user
         {
             foreach (var used in useruse.Keys)
             {
@@ -36,16 +36,16 @@ namespace QueueBot
                 {
                     useruse[used]--;
                 }
-                if (useruse[used] == 0) useruse.Remove(used);
+                if (useruse[used] == 0) useruse.Remove(used); //remove if not in list
             }
         }
 
-        public static async void hasspammed(CommandEventArgs e)
+        public static async void hasspammed(CommandEventArgs e) //if they've been caught
         {
-            if (!Ids.whitelist.Contains(e.Message.User.Id.ToString()))
+            if (!Ids.whitelist.Contains(e.Message.User.Id.ToString())) //and they're not whitelisted
             {
-                useruse[e.Message.User.Id.ToString()] = 0;
-                if (muchspam.ContainsKey(e.Message.User.Id.ToString()))
+                useruse[e.Message.User.Id.ToString()] = 0; //reset message count, comment out for stricter antispam
+                if (muchspam.ContainsKey(e.Message.User.Id.ToString())) //if they've been caught before
                 {
                     muchspam[e.Message.User.Id.ToString()]++;
                     if (muchspam[e.Message.User.Id.ToString()] == 2)
@@ -80,12 +80,10 @@ namespace QueueBot
            ,,,,        ,,,      ,,,,,      ,,
            ,,,           ,      ,,,         ,,
            ,,,            ,    ,,,          ,,
-           ,,,                ,,            ,,
-           ,,,             ,  :             ,,
-           ,,,                              ,
+           ,,,             ,  ,,            ,,
+           ,,,             ,  ,             ,,
+           ,,,              ,               ,
             ,,                             ,
-
-
                  ,,,            ,,,
                 ,,             ,,,      ,
            ,                            ,
