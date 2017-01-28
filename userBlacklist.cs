@@ -10,7 +10,7 @@ namespace QueueBot
     {
         public static string[] bringIn()
         {
-            string[] list =  System.IO.File.ReadAllLines(@"C:\Users\maste\Documents\GitHub\Queuebot\blacklist.txt");
+            string[] list =  System.IO.File.ReadAllLines(@"blacklist.txt");
             foreach (string str in list)
             {
                 MyBot.blackused.Clear();
@@ -49,12 +49,9 @@ namespace QueueBot
                 await e.Message.User.SendMessage(
                     "You have attemted to use a command `3` times. As such, moderators on this server will be alterted to bot abuse");
                 Console.WriteLine(e.Message.User.Name +
-                                  " has used a command `3` times post blacklist on server " +
+                                  " has used a command 3 times post blacklist on server " +
                                   e.Message.Server.Name);
             }
         }
-
-
-
     }
 }

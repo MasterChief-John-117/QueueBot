@@ -11,25 +11,32 @@ namespace QueueBot
 
     class MyBot
     {
-        public static Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>();
-        public static Dictionary<string, int> blackused = new Dictionary<string, int>();
+
         DiscordClient discord;
         CommandService commands;
-        private static Discord.Commands.CommandEventArgs e;
-        public static LinkedList<string> usingq;
-        public static List<string> blacklist = userBlacklist.bringIn().ToList<string>();
+        private static CommandEventArgs e;
+
+
+        public static Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>(); //Dictionary of all queues
+        public static Dictionary<string, int> blackused = new Dictionary<string, int>(); //Dictionary of how many times a blacklisted user has used a command
+
+        public static LinkedList<string> usingq; //active queue
+        public static List<string> blacklist = userBlacklist.bringIn().ToList<string>(); //Blacklist
+
+        //timers
         public System.Timers.Timer blacktimer;
         public System.Timers.Timer spamtimer;
 
 
         public MyBot()
         {
-
-            blacktimer = new System.Timers.Timer(60 * 1000);
+            //timer for exporting blacklist
+            blacktimer = new System.Timers.Timer(60 * 1000); //60 seconds
             blacktimer.Elapsed += userBlacklist.sendOut;
             blacktimer.AutoReset = true;
             blacktimer.Enabled = true;
-            spamtimer = new System.Timers.Timer(10 * 1000);
+            //timer for antispam
+            spamtimer = new System.Timers.Timer(10 * 1000); //10 seconds
             spamtimer.Elapsed += Antispam.decrement;
             spamtimer.AutoReset = true;
             spamtimer.Enabled = true;
@@ -53,31 +60,28 @@ namespace QueueBot
             commands = discord.GetService<CommandService>();
 
 
-                //queue commands
-
-                //Dictionary <  Guid, LinkedList < User >> queues = new Dictionary < Guid, LinkedList< User >>();
-
                 LinkedList<string> queue = new LinkedList<string>();
 
-            discord.MessageReceived += async (s, m) =>
+            discord.MessageReceived += async (s, m) => //for message removal if use is blacklisted
             {
                 if (blacklist.Contains(m.Message.User.Id.ToString()) &&
-                    m.Message.Text.StartsWith("=" + allcomms.allcoms.Any()))
+                    m.Message.Text.StartsWith("=" + allcomms.allcoms.Any())) //double check if command, using manual array
                 {
                     await m.Message.Delete();
-                    //userBlacklist.commandUsed(e);
+                    //userBlacklist.commandUsed(e); IMPLEMENT
                 }
             };
 
-            discord.GetService<CommandService>().CreateCommand("qme")
+            discord.GetService<CommandService>().CreateCommand("qme") //command to add user to queue
                 .Alias(new String[] {"add"})
+                .Description("Adds the user to the queue")
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
-                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
+                    if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user in blacklist
                     {
                         Antispam.increment(e);
-                        if (!usingq.Contains(e.Message.User.Name))
+                        if (!usingq.Contains(e.Message.User.Name)) //is user in queue already
                         {
                             usingq.AddLast(e.Message.User.Name);
                             await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
@@ -89,11 +93,12 @@ namespace QueueBot
                         userBlacklist.commandUsed(e);
                     }
                 });
-            discord.GetService<CommandService>().CreateCommand("queue")
+            discord.GetService<CommandService>().CreateCommand("queue") //return the active queue
                 .Alias(new String[] {"q"})
+                .Description("Return the active queue")
                 .Do(async (e) =>
                 {
-                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
+                    if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user blacklisted
                     {
                         Antispam.increment(e);
                         string message = "";
@@ -111,18 +116,19 @@ namespace QueueBot
                     }
 
                 });
-            discord.GetService<CommandService>().CreateCommand("next")
+            discord.GetService<CommandService>().CreateCommand("next") //advance queue
+                .Description("Advance the queue and ping the user who is up")
                 .Alias(new String[] {"up"})
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
-                    if (!blacklist.Contains(e.Message.User.Id.ToString()))
+                    if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user blacklisted
                     {
                         Antispam.increment(e);
-                        if (usingq.Count() == 0)
+                        if (usingq.Count() == 0) //check for users in queue
                         {
                             await e.Message.Channel.SendMessage(
-                                "No one is in the queue! Use `=qme` to get placed in the queue.");
+                                $"No one is in the queue! Use `=qme` to get placed in the queue.");
                         }
                         else if (usingq.Count() != 0)
                         {
@@ -134,7 +140,7 @@ namespace QueueBot
                             {
                                 next = "<@" + user.Id + ">";
                             }
-                            await e.Message.Channel.SendMessage(next + " is up!");
+                            await e.Message.Channel.SendMessage($"{next} is up");
                             usingq.RemoveFirst();
 
                         }
@@ -155,9 +161,9 @@ namespace QueueBot
                         if (usingq.Contains(e.Message.User.Name))
                         {
                             usingq.Remove(e.Message.User.Name);
-                            await e.Message.Channel.SendMessage(e.Message.User.Name + " has left the queue");
+                            await e.Message.Channel.SendMessage($"{e.Message.User.Name} has left the queue");
                         }
-                        else await e.Message.Channel.SendMessage("You weren't in the queue!");
+                        else await e.Message.Channel.SendMessage($"You weren't in the queue!");
                     }
                     else
                     {
@@ -180,19 +186,19 @@ namespace QueueBot
                         {
                             blacklist.Add(e.Message.Text.Substring(15));
                             await e.Message.Channel.SendMessage(
-                                "Requested user has been added to *The Blacklist* ó_ò \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
+                                $"Requested user has been added to *The Blacklist* ò_ó \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
                         }
                         else
                         {
                             await e.Message.Channel.SendMessage(
-                                "Requested  user is on the permanant whitelist \nIf you have an issue, please contact @MasterChief_John-117#1911 for support");
+                                $"Requested  user is on the permanant whitelist \nIf you have an issue, please contact @MasterChief_John-117#1911 for support");
                         }
                     }
                     else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
                     else
                     {
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You don't have permssions to use that command! (`blacklistUser`)");
+                        await e.Message.User.SendMessage($"You don't have permssions to use that command! (`blacklistUser`)");
                     }
 
                 });
