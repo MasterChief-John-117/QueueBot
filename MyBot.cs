@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Discord;
 using Discord.Commands;
-
+using Discord.Commands.Permissions.Visibility;
 
 
 namespace QueueBot
@@ -142,7 +142,6 @@ namespace QueueBot
                             }
                             await e.Message.Channel.SendMessage($"{next} is up");
                             usingq.RemoveFirst();
-
                         }
                     }
                     else
@@ -176,6 +175,7 @@ namespace QueueBot
             //ADMIN COMMANDS
             discord.GetService<CommandService>().CreateCommand("blacklistUser")
                 .Parameter("userId", ParameterType.Required)
+                .PrivateOnly()
                 .Description("Moderator only")
                 .Do(async (e) =>
                 {
@@ -207,6 +207,7 @@ namespace QueueBot
             //MY COMMANDS
             discord.GetService<CommandService>()
                 .CreateCommand("listall")
+                .Hide()
                 .Do(async (e) =>
                 {
                     if (e.Message.User.Id.ToString() == Ids.ownerId)
@@ -228,6 +229,7 @@ namespace QueueBot
                 });
             discord.GetService<CommandService>()
                 .CreateCommand("getq")
+                .Hide()
                 .Parameter("selected", ParameterType.Required)
                 .Do(async (e) =>
                 {
@@ -247,9 +249,9 @@ namespace QueueBot
                         }
                     }
                     else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
-                    else
+                    else //lack perms but not blacklisted
                     {
-                        await e.Message.Delete();
+                        e.Message.Delete();
                         await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
                     }
                 });
