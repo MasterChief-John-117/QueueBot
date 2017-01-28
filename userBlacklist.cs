@@ -8,27 +8,28 @@ namespace QueueBot
 {
     public class userBlacklist
     {
-        public static string[] bringIn()
+        public static string[] bringIn() //at run
         {
-            string[] list =  System.IO.File.ReadAllLines(@"blacklist.txt");
+            string[] list =  System.IO.File.ReadAllLines(@"blacklist.txt"); //set list as string array
             foreach (string str in list)
             {
                 MyBot.blackused.Clear();
                 MyBot.blackused.Add(str, 0);
             }
-            Console.WriteLine(DateTime.Now + " Blacklist introduced with " + list.Length + " users");
+            Console.WriteLine(DateTime.Now + " Blacklist introduced with " + list.Length + " users"); //send out number of users in queue
+
 
             return System.IO.File.ReadAllLines(@"blacklist.txt");
         }
 
-        public static void sendOut(Object source, ElapsedEventArgs e)
+        public static void sendOut(Object source, ElapsedEventArgs e) //export blacklist every n seconds
         {
-            string[] list = MyBot.blacklist.ToArray();
-            foreach (string str in list)
+            string[] list = MyBot.blacklist.ToArray(); //convert to array of strings
+            /*foreach (string str in list)
             {
-                if (!MyBot.blacklist.Contains(str)) MyBot.blackused.Add(str, 0);
-            }
-            System.IO.File.WriteAllLines(@"blacklist.txt", list);
+                if (!MyBot.blacklist.Contains(str)) MyBot.blackused.Add(str, 0); commented for testing, CHECK IF CAUSE BORK
+            }*/
+            System.IO.File.WriteAllLines(@"blacklist.txt", list); //export to text
             Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
         }
 
@@ -36,7 +37,8 @@ namespace QueueBot
         public static async void commandUsed(CommandEventArgs e)
         {
             if (!MyBot.blackused.ContainsKey(e.Message.User.Id.ToString())) MyBot.blackused.Add(e.Message.User.Id.ToString(), 0);
-            MyBot.blackused[e.Message.User.Id.ToString()]++;
+            //if Dictionary does not have their userID, add it and set their value to zero
+            MyBot.blackused[e.Message.User.Id.ToString()]++; //increment how many times they've used it
             e.Message.Delete();
             if (MyBot.blackused[e.Message.User.Id.ToString()] < 3)
             {
