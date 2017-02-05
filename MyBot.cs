@@ -183,7 +183,7 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
 
-                    if (e.Message.User.ServerPermissions.BanMembers) //if user can ban members
+                    if (e.Message.User.ServerPermissions.BanMembers || e.Message.User.Id.ToString().Equals(Ids.ownerId)) //if user can ban members
                     {
                         if (!(Ids.whitelist.Contains(e.Message.Text.Substring(15))))
                         {
@@ -212,7 +212,7 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
 
-                    if (e.Message.User.ServerPermissions.BanMembers) //if user can ban members
+                    if (e.Message.User.ServerPermissions.BanMembers|| e.Message.User.Id.ToString().Equals(Ids.ownerId)) //if user can ban members
                     {
                         blacklist.Remove(e.Message.Text.Substring(17));
                         await e.Message.Channel.SendMessage(
