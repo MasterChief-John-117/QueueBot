@@ -13,7 +13,7 @@ namespace QueueBot
             string[] list =  System.IO.File.ReadAllLines(@"blacklist.txt"); //set list as string array
             foreach (string str in list)
             {
-                MyBot.blackused.Clear();
+                MyBot.blackused.Clear();    
                 MyBot.blackused.Add(str, 0);
             }
             Console.WriteLine(DateTime.Now + " Blacklist introduced with " + list.Length + " users"); //send out number of users in queue
@@ -30,7 +30,7 @@ namespace QueueBot
                 if (!MyBot.blacklist.Contains(str)) MyBot.blackused.Add(str, 0); commented for testing, CHECK IF CAUSE BORK
             }*/
             System.IO.File.WriteAllLines(@"blacklist.txt", list); //export to text
-            Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
+            //Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
         }
 
 

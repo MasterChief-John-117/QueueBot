@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Discord;
 using Discord.Commands;
+using Discord.Commands.Permissions.Levels;
 using Discord.Commands.Permissions.Visibility;
 
 
@@ -40,6 +42,7 @@ namespace QueueBot
             spamtimer.Elapsed += Antispam.decrement;
             spamtimer.AutoReset = true;
             spamtimer.Enabled = true;
+
 
 
 
@@ -175,7 +178,7 @@ namespace QueueBot
             //ADMIN COMMANDS
             discord.GetService<CommandService>().CreateCommand("blacklistUser")
                 .Parameter("userId", ParameterType.Required)
-                .PrivateOnly()
+                .Hide()
                 .Description("Moderator only")
                 .Do(async (e) =>
                 {
@@ -186,7 +189,7 @@ namespace QueueBot
                         {
                             blacklist.Add(e.Message.Text.Substring(15));
                             await e.Message.Channel.SendMessage(
-                                $"Requested user has been added to *The Blacklist* ò_ó \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
+                                $"<@{e.GetArg("userId")}> has been added to *The Blacklist* ò_ó \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
                         }
                         else
                         {
@@ -199,6 +202,28 @@ namespace QueueBot
                     {
                         await e.Message.Delete();
                         await e.Message.User.SendMessage($"You don't have permssions to use that command! (`blacklistUser`)");
+                    }
+
+                });
+            discord.GetService<CommandService>().CreateCommand("unBlacklistUser")
+                .Parameter("userId", ParameterType.Required)
+                .Hide()
+                .Description("Moderator only")
+                .Do(async (e) =>
+                {
+
+                    if (e.Message.User.ServerPermissions.BanMembers) //if user can ban members
+                    {
+                        blacklist.Remove(e.Message.Text.Substring(17));
+                        await e.Message.Channel.SendMessage(
+                            $"<@{e.GetArg("userId")}> has been removed from *The Blacklist*");
+
+                    }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.User.SendMessage($"You don't have permssions to use that command! (`unBlacklistUser`)");
                     }
 
                 });
@@ -224,7 +249,7 @@ namespace QueueBot
                     else
                     {
                         await e.Message.Delete();
-                        await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
+                        await e.Message.User.SendMessage("You don't have permission to use the command `listall`");//PM's the user
                     }
                 });
             discord.GetService<CommandService>()
@@ -251,11 +276,10 @@ namespace QueueBot
                     else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
                     else //lack perms but not blacklisted
                     {
-                        e.Message.Delete();
+                        await e.Message.Delete();
                         await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
                     }
-                });
-
+                    });
 
 
 
@@ -284,6 +308,7 @@ namespace QueueBot
                 LinkedList<string> queue = new LinkedList<string>(); //create new queue
                 queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
                 usingq = queues[e.Message.Server.ToString()]; //select new queue
+                Console.WriteLine($"Queue for {e.Message.Server.ToString()} created");
             }
         }
 
