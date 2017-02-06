@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Timers;
+using System.Collections.Generic;
+using System.Linq;
 using Discord;
 using Discord.Commands;
 
@@ -8,6 +10,11 @@ namespace QueueBot
 {
     public class userBlacklist
     {
+        public static List<string> blacklist = bringIn().ToList();
+
+
+
+
         public static string[] bringIn() //at run
         {
             string[] list =  System.IO.File.ReadAllLines(@"blacklist.txt"); //set list as string array
@@ -25,10 +32,6 @@ namespace QueueBot
         public static void sendOut(Object source, ElapsedEventArgs e) //export blacklist every n seconds
         {
             string[] list = MyBot.blacklist.ToArray(); //convert to array of strings
-            /*foreach (string str in list)
-            {
-                if (!MyBot.blacklist.Contains(str)) MyBot.blackused.Add(str, 0); commented for testing, CHECK IF CAUSE BORK
-            }*/
             System.IO.File.WriteAllLines(@"blacklist.txt", list); //export to text
             //Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
         }
