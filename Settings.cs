@@ -9,6 +9,7 @@
     {
         public static string ownerId = "169918990313848832";
         public static string[] whitelist = {ownerId };
+        public static string[] contributors = {"227878052791582720"};
     }
 
     public class allcomms
