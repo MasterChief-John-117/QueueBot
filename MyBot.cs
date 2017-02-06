@@ -280,6 +280,35 @@ namespace QueueBot
                         await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
                     }
                     });
+            discord.GetService<CommandService>().CreateCommand("showBlacklist")
+                .Hide()
+                .Description("Prints all users in blacklist, owner only")
+                .Do(async (e) =>
+                {
+
+                    if (e.Message.User.Id.ToString().Equals(Ids.ownerId)) //user is owner
+                    {
+                        string message = "Blacklisted users: ";
+                        foreach (string userid in blacklist)
+                        {
+                            if (message.Length > 1000)
+                            {
+                                await e.Message.Channel.SendMessage(message);
+                                message = "";
+                            }
+                            message += $"<@{userid}>, ";
+                        }
+                        await e.Channel.SendMessage(message);
+
+                    }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.User.SendMessage($"You don't have permssions to use that command! (`showBlacklist`)");
+                    }
+
+                });
 
 
 
