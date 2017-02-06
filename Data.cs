@@ -18,6 +18,17 @@ namespace QueueBot
             if (userBlacklist.blacklist.Contains(userId.ToString())) isBlacklisted = true;
             else isBlacklisted = false;
         }
+    }
 
+    public class ServerData
+    {
+        private ulong serverId;
+        private string serverName;
+
+        public ServerData(CommandEventArgs e)
+        {
+            serverId = e.Message.Server.Id;
+            serverName = e.Message.Server.Name;
+        }
     }
 }
