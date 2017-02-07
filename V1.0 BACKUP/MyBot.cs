@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using Discord;
 using Discord.Commands;
-using Discord.Commands.Permissions.Levels;
-using Discord.Commands.Permissions.Visibility;
-
 
 namespace QueueBot
 {
@@ -73,13 +69,17 @@ namespace QueueBot
                     await m.Message.Delete();
                     //userBlacklist.commandUsed(e); IMPLEMENT
                 }
+                else if (m.Message.Text.Contains("@QueueBot") && m.Message.Text.ToLower().Contains("prefix"))
+                {
+                    await m.Message.Channel.SendMessage("My prefix is `=`! Use `=help` to see the commands you can use ;)");
+                }
             };
 
             discord.GetService<CommandService>().CreateCommand("qme") //command to add user to queue
                 .Alias(new String[] {"add"})
                 .Description("Adds the user to the queue")
                 .Do(async (e) =>
-                {
+                    {
                     setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user in blacklist
                     {

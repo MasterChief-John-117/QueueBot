@@ -24,3 +24,23 @@ C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\QueueBot.pdb
 C:\Users\maste\Documents\GitHub\Queuebot\bin\Debug\Discord.Net.Modules.dll
 C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.exe
 C:\Users\maste\Documents\GitHub\Queuebot\obj\Debug\QueueBot.pdb
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\QueueBot.exe.config
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\QueueBot.exe
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\QueueBot.pdb
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Discord.Net.Commands.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Discord.Net.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Discord.Net.Modules.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Newtonsoft.Json.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Nito.AsyncEx.Concurrent.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Nito.AsyncEx.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Nito.AsyncEx.Enlightenment.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\RestSharp.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\WebSocket4Net.dll
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Newtonsoft.Json.xml
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Nito.AsyncEx.xml
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Nito.AsyncEx.Concurrent.xml
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\Nito.AsyncEx.Enlightenment.xml
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\bin\Debug\RestSharp.xml
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\obj\Debug\QueueBot.csprojResolveAssemblyReference.cache
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\obj\Debug\QueueBot.exe
+C:\Users\maste\Documents\GitHub\Queuebot\V1.0 BACKUP\obj\Debug\QueueBot.pdb
