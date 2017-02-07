@@ -143,6 +143,7 @@ namespace QueueBot
                             {
                                 next = "<@" + user.Id + ">";
                             }
+                            discord.SetGame($"with {up}");
                             await e.Message.Channel.SendMessage($"{next} is up");
                             usingq.RemoveFirst();
                         }
@@ -337,7 +338,6 @@ namespace QueueBot
                 LinkedList<string> queue = new LinkedList<string>(); //create new queue
                 queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
                 usingq = queues[e.Message.Server.ToString()]; //select new queue
-                Console.WriteLine($"Queue for {e.Message.Server.ToString()} created");
             }
         }
 
