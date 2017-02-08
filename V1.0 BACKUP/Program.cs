@@ -11,9 +11,13 @@
     {
         class Program
         {
+            static bool run = true;
             static void Main(string[] args)
             {
-                MyBot bot = new MyBot();
+                while (run == true)
+                {
+                    MyBot bot = new MyBot();
+                }
 
             }
         }

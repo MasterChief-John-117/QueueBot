@@ -120,7 +120,7 @@ namespace QueueBot
 
                 });
             discord.GetService<CommandService>().CreateCommand("next") //advance queue
-                .Description("Advance the queue and ping the user who is up")
+                .Description("Advance the queue and pings the user who is up")
                 .Alias(new String[] {"up"})
                 .Do(async (e) =>
                 {
@@ -155,6 +155,7 @@ namespace QueueBot
                 });
             discord.GetService<CommandService>().CreateCommand("leave")
                 .Alias(new String[] {"dqme"})
+                .Description("Removes the user from the queue")
                 .Do(async (e) =>
                 {
                     setOrGetQueue(e);
@@ -180,7 +181,7 @@ namespace QueueBot
             discord.GetService<CommandService>().CreateCommand("blacklistUser")
                 .Parameter("userId", ParameterType.Required)
                 .Hide()
-                .Description("Moderator only")
+                .Description("**Moderator only** \nAdds a user to the blacklist")
                 .Do(async (e) =>
                 {
 
@@ -209,7 +210,7 @@ namespace QueueBot
             discord.GetService<CommandService>().CreateCommand("unBlacklistUser")
                 .Parameter("userId", ParameterType.Required)
                 .Hide()
-                .Description("Moderator only")
+                .Description("**Moderator only** \nRemoves a user from the blacklist")
                 .Do(async (e) =>
                 {
 
@@ -234,6 +235,7 @@ namespace QueueBot
             discord.GetService<CommandService>()
                 .CreateCommand("listall")
                 .Hide()
+                .Description("**Owner Only** \nLists all initiallized queues")
                 .Do(async (e) =>
                 {
                     if (e.Message.User.Id.ToString() == Ids.ownerId)
@@ -255,7 +257,8 @@ namespace QueueBot
                 });
             discord.GetService<CommandService>()
                 .CreateCommand("getq")
-                .Parameter("selected", ParameterType.Required)
+                .Description("**Owner Only** \nreturns the queue of a selected server")
+                .Parameter("selected", ParameterType.Unparsed)
                 .Hide()
                 .Do(async (e) =>
                 {
@@ -280,13 +283,12 @@ namespace QueueBot
                         await e.Message.Delete();
                         await e.Message.User.SendMessage("You don't have permission to use the command `allqs`");//PM's the user
                     }
-                    });
+                });
             discord.GetService<CommandService>().CreateCommand("showBlacklist")
+                .Description("**Owner Only** \nReturns the current blacklist and pings everyone in it")
                 .Hide()
-                .Description("Prints all users in blacklist, owner only")
                 .Do(async (e) =>
                 {
-
                     if (e.Message.User.Id.ToString().Equals(Ids.ownerId)) //user is owner
                     {
                         string message = "Blacklisted users: ";
@@ -310,21 +312,25 @@ namespace QueueBot
                     }
 
                 });
-            discord.GetService<CommandService>().CreateCommand("pmuser").Parameter("text", ParameterType.Unparsed).Do(async (e) =>
-            {
-                if (e.Message.User.Id.ToString() == Ids.ownerId)
+            discord.GetService<CommandService>().CreateCommand("pmuser")
+                .Parameter("text", ParameterType.Unparsed)
+                .Description("**Owner only** \nWhat do you think it does?")
+                .Hide()
+                .Do(async (e) =>
                 {
-                    string text = e.GetArg("text");
-                    int something = text.IndexOf(" ", StringComparison.CurrentCulture);
-                    string IdString = text.Substring(0, something);
-                    string message = text.Substring(something);
-                    ulong uId = Convert.ToUInt64(IdString);
-                    var me = discord.Servers.SelectMany(m => m.Users).FirstOrDefault(u => u.Id == uId);
-                    e.Message.Channel.SendMessage($"{message} sent to {me.Name}");
-                    Console.WriteLine($"{message} sent to {me.Name}");
-                    await me.SendMessage(message);
+                    if (e.Message.User.Id.ToString() == Ids.ownerId)
+                    {
+                        string text = e.GetArg("text");
+                        int something = text.IndexOf(" ", StringComparison.CurrentCulture);
+                        string IdString = text.Substring(0, something);
+                        string message = text.Substring(something);
+                        ulong uId = Convert.ToUInt64(IdString);
+                        var me = discord.Servers.SelectMany(m => m.Users).FirstOrDefault(u => u.Id == uId);
 
-                }
+                        await e.Message.Channel.SendMessage($"{message} sent to {me.Name}");
+                        Console.WriteLine($"{message} sent to {me.Name}");
+                        await me.SendMessage(message);
+                    }
             });
             discord.MessageReceived += (async (s, m) =>
             {
@@ -336,17 +342,35 @@ namespace QueueBot
                 }
             });
 
-            discord.GetService<CommandService>().CreateCommand("say").Hide()
+            discord.GetService<CommandService>().CreateCommand("say")
+                .Hide()
+                .Description("Makes the bot say what's on its mind")
                 .Parameter("message", ParameterType.Unparsed)
                 .Do(async (e) =>
-            {
-                if (Ids.ownerId == e.Message.User.Id.ToString() ||
-                    Ids.contributors.Contains(e.Message.User.Id.ToString()))
                 {
-                    e.Message.Delete();
-                    await e.Message.Channel.SendMessage(e.GetArg("message"));
-                }
-            });
+                    if (Ids.ownerId == e.Message.User.Id.ToString() ||
+                        Ids.contributors.Contains(e.Message.User.Id.ToString()))
+                        {
+                            await e.Message.Delete();
+                            Console.WriteLine($"{e.Message.User.Name} said {e.GetArg("message")}");
+                            await e.Message.Channel.SendMessage(e.GetArg("message"));
+                        }
+                    });
+            discord.GetService<CommandService>().CreateCommand("reload").Hide()
+                .Alias(new string[] {"refresh", "reboot", "restart"})
+                .Hide()
+                .Description($"Owner Only \nReloads the configuration for the bot")
+                .Do(async (e) =>
+                {
+                    if (Ids.ownerId == e.Message.User.Id.ToString())
+                    {
+                        await e.Message.Channel.SendMessage("Reloading configs, be back soon! :wave:");
+                        System.Threading.Thread.Sleep(500);
+                        await discord.Disconnect();
+                    }
+                });
+
+
 
 
 
