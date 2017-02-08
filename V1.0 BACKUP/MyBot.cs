@@ -310,6 +310,32 @@ namespace QueueBot
                     }
 
                 });
+            discord.GetService<CommandService>().CreateCommand("pmuser").Parameter("text", ParameterType.Unparsed).Do(async (e) =>
+            {
+                if (e.Message.User.Id.ToString() == Ids.ownerId)
+                {
+                    string text = e.GetArg("text");
+                    int something = text.IndexOf(" ", StringComparison.CurrentCulture);
+                    string IdString = text.Substring(0, something);
+                    string message = text.Substring(something);
+                    ulong uId = Convert.ToUInt64(IdString);
+                    var me = discord.Servers.SelectMany(m => m.Users).FirstOrDefault(u => u.Id == uId);
+                    e.Message.Channel.SendMessage($"{message} sent to {me.Name}");
+                    Console.WriteLine($"{message} sent to {me.Name}");
+                    await me.SendMessage(message);
+
+                }
+            });
+            discord.MessageReceived += (async (s, m) =>
+            {
+                if (m.Message.Channel.IsPrivate && !m.Message.IsAuthor && m.Message.User.Id.ToString() != Ids.ownerId)
+                {
+                    var me = discord.Servers.SelectMany(e => e.Users).FirstOrDefault(u => u.Id.ToString() == Ids.ownerId);
+
+                    await me.SendMessage($"Message from {m.Message.User.Name}({m.Message.User.Id}): {m.Message.RawText}");
+                }
+            });
+
 
 
 
