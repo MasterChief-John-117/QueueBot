@@ -336,6 +336,18 @@ namespace QueueBot
                 }
             });
 
+            discord.GetService<CommandService>().CreateCommand("say").Hide()
+                .Parameter("message", ParameterType.Unparsed)
+                .Do(async (e) =>
+            {
+                if (Ids.ownerId == e.Message.User.Id.ToString() ||
+                    Ids.contributors.Contains(e.Message.User.Id.ToString()))
+                {
+                    e.Message.Delete();
+                    await e.Message.Channel.SendMessage(e.GetArg("message"));
+                }
+            });
+
 
 
 
