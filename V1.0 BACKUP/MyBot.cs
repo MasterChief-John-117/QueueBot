@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DiscoBot;
 using Discord;
 using Discord.Commands;
 
@@ -16,14 +15,11 @@ namespace QueueBot
         private static CommandEventArgs e;
 
 
-        public static Dictionary<string, LinkedList<ulong>> queues = new Dictionary<string, LinkedList<ulong>>(); //Dictionary of all queues
+        public static Dictionary<string, LinkedList<string>> queues = new Dictionary<string, LinkedList<string>>(); //Dictionary of all queues
         public static Dictionary<string, int> blackused = new Dictionary<string, int>(); //Dictionary of how many times a blacklisted user has used a command
 
-        public static LinkedList<ulong> usingq; //active queue
+        public static LinkedList<string> usingq; //active queue
         public static List<string> blacklist = userBlacklist.bringIn().ToList<string>(); //Blacklist
-        public static Dictionary<ulong, UserData> allUsers = new Dictionary<ulong, UserData>();
-
-
 
         //timers
         public System.Timers.Timer blacktimer;
@@ -42,13 +38,6 @@ namespace QueueBot
             spamtimer.Elapsed += Antispam.decrement;
             spamtimer.AutoReset = true;
             spamtimer.Enabled = true;
-
-            string IdsMessage = "";
-            for (int i = 0; i < Ids.contributors.Count(); i++)
-            {
-                IdsMessage = Ids.contributors[i] + "  ";
-            }
-            Console.WriteLine(IdsMessage);
 
 
 
@@ -70,34 +59,7 @@ namespace QueueBot
             commands = discord.GetService<CommandService>();
 
 
-                LinkedList<ulong> queue = new LinkedList<ulong>();
-
-
-
-
-
-            discord.MessageReceived += (async (s, m) =>  //handles user creation and nickname edits
-            {
-                ulong UserID = m.Message.User.Id;
-                string userName = String.IsNullOrEmpty(m.Message.User.Nickname) ? m.Message.User.Name : m.Message.User.Nickname;
-
-                if (!allUsers.ContainsKey(UserID) && !m.Message.IsAuthor) //Creates a new user if not in memory
-                {
-                    allUsers.Add(UserID, new UserData(m));
-                    var activeUser = allUsers[UserID];
-                    Console.WriteLine($"User Created: (Nick)Name:{activeUser.uName()} Id:{activeUser.uId()}" +
-                                      $" IsBlacklisted: {activeUser.uisBlackListed()}");
-                }
-                else if (allUsers.ContainsKey(UserID) && userName != allUsers[UserID].uName())
-                {
-                    Console.WriteLine($"User Updated: {allUsers[UserID].uName()} -> {userName}");
-                    allUsers.Remove(UserID);
-                    allUsers.Add(UserID, new UserData(m));
-                }
-
-            });
-
-
+                LinkedList<string> queue = new LinkedList<string>();
 
             discord.MessageReceived += async (s, m) => //for message removal if use is blacklisted
             {
@@ -121,14 +83,11 @@ namespace QueueBot
                     setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user in blacklist
                     {
-                        ulong UserID = e.Message.User.Id;
-                        var activeUser = allUsers[UserID];
-
                         Antispam.increment(e);
-                        if (!usingq.Contains(UserID)) //is user in queue already
+                        if (!usingq.Contains(e.Message.User.Name)) //is user in queue already
                         {
-                            usingq.AddLast(UserID);
-                            await e.Channel.SendMessage(activeUser.uName() + " has been added to the queue!");
+                            usingq.AddLast(e.Message.User.Name);
+                            await e.Channel.SendMessage(e.Message.User.Name + " has been added to the queue!");
                         }
                         else await e.Channel.SendMessage("You're already in the queue!");
                     }
@@ -144,15 +103,12 @@ namespace QueueBot
                 {
                     if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user blacklisted
                     {
-                        ulong UserID = e.Message.User.Id;
-                        var activeUser = allUsers[UserID];
-
                         Antispam.increment(e);
                         string message = "";
                         setOrGetQueue(e);
-                        foreach (ulong value in usingq)
+                        foreach (String value in usingq)
                         {
-                            message += (activeUser.uName() + ", ");
+                            message += (value + ", ");
                         }
                         if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
                         await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
@@ -171,10 +127,6 @@ namespace QueueBot
                     setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString())) //is user blacklisted
                     {
-
-                        ulong UserID = e.Message.User.Id;
-                        var activeUser = allUsers[UserID];
-
                         Antispam.increment(e);
                         if (usingq.Count() == 0) //check for users in queue
                         {
@@ -183,10 +135,16 @@ namespace QueueBot
                         }
                         else if (usingq.Count() != 0)
                         {
-                            ulong up = usingq.First();
-                            string next = $"{allUsers[up].uId()}";
-                            discord.SetGame($"with {allUsers[up].uName()}");
-                            await e.Message.Channel.SendMessage($"<@{next}> is up");
+                            string up = usingq.First();
+                            string next = "";
+                            IEnumerable<User> users = e.Message.Client.Servers.SelectMany(s => s.Users)
+                                .Where(u => u.Name == up);
+                            foreach (User user in users)
+                            {
+                                next = "<@" + user.Id + ">";
+                            }
+                            discord.SetGame($"with {up}");
+                            await e.Message.Channel.SendMessage($"{next} is up");
                             usingq.RemoveFirst();
                         }
                     }
@@ -200,18 +158,14 @@ namespace QueueBot
                 .Description("Removes the user from the queue")
                 .Do(async (e) =>
                 {
-
-                    ulong UserID = e.Message.User.Id;
-                    var activeUser = allUsers[UserID];
-
                     setOrGetQueue(e);
                     if (!blacklist.Contains(e.Message.User.Id.ToString()))
                     {
                         Antispam.increment(e);
-                        if (usingq.Contains(UserID))
+                        if (usingq.Contains(e.Message.User.Name))
                         {
-                            usingq.Remove(UserID);
-                            await e.Message.Channel.SendMessage($"{allUsers[UserID].uName()} has left the queue");
+                            usingq.Remove(e.Message.User.Name);
+                            await e.Message.Channel.SendMessage($"{e.Message.User.Name} has left the queue");
                         }
                         else await e.Message.Channel.SendMessage($"You weren't in the queue!");
                     }
@@ -237,12 +191,12 @@ namespace QueueBot
                         {
                             blacklist.Add(e.Message.Text.Substring(15));
                             await e.Message.Channel.SendMessage(
-                                $"<@{e.GetArg("userId")}> has been added to *The Blacklist* ò_ó \nIf you want them un-blacklisted, please PM this bot");
+                                $"<@{e.GetArg("userId")}> has been added to *The Blacklist* ò_ó \nIf you want them un-blacklisted, please contact @MasterChief_John-117#1911");
                         }
                         else
                         {
                             await e.Message.Channel.SendMessage(
-                                $"Requested  user is on the permanant whitelist \nIf you have an issue, please PM this bot for support");
+                                $"Requested  user is on the permanant whitelist \nIf you have an issue, please contact @MasterChief_John-117#1911 for support");
                         }
                     }
                     else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
@@ -288,7 +242,7 @@ namespace QueueBot
                     {
 
                         string message = "";
-                        foreach (KeyValuePair<string, LinkedList<ulong>> kvp in queues)
+                        foreach (KeyValuePair<string, LinkedList<string>> kvp in queues)
                         {
                             message = message + kvp.Key + ": " + kvp.Value.Count() + " member(s) in queue \n"; ///eventually add 2k+ char handling
                         }
@@ -311,18 +265,17 @@ namespace QueueBot
                     if (e.Message.User.Id.ToString() == Ids.ownerId)
                     {
 
-                        ulong UserID = e.Message.User.Id;
-                        var activeUser = allUsers[UserID];
-
-                        Antispam.increment(e);
                         string message = "";
-                        setOrGetQueue(e);
-                        foreach (ulong value in usingq)
+                        if (queues.ContainsKey(e.GetArg("selected")))
                         {
-                            message += (activeUser.uName() + ", ");
+                            usingq = queues[e.GetArg("selected")];
+                            foreach (String value in usingq)
+                            {
+                                message += (value + ", ");
+                            }
+                            if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
+                            await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
                         }
-                        if (message == "") message = "No one! Add yourself with `=qme` if you want to go.";
-                        await e.Message.Channel.SendMessage("Currently in the queue is: " + message);
                     }
                     else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
                     else //lack perms but not blacklisted
@@ -412,8 +365,7 @@ namespace QueueBot
                     if (Ids.ownerId == e.Message.User.Id.ToString())
                     {
                         await e.Message.Channel.SendMessage("Reloading configs, be back soon! :wave:");
-                        Program.restart();
-                        System.Threading.Thread.Sleep(5000);
+                        System.Threading.Thread.Sleep(500);
                         await discord.Disconnect();
                     }
                 });
@@ -441,11 +393,11 @@ namespace QueueBot
         {
             if (queues.ContainsKey(e.Message.Server.ToString())) //if it exists
             {
-                usingq =  queues[e.Message.Server.Name.ToString()]; //select it
+                usingq =  queues[e.Message.Server.ToString()]; //select it
             }
             else
             {
-                LinkedList<ulong> queue = new LinkedList<ulong>(); //create new queue
+                LinkedList<string> queue = new LinkedList<string>(); //create new queue
                 queues.Add(e.Message.Server.ToString(), queue); //add to dictionary
                 usingq = queues[e.Message.Server.ToString()]; //select new queue
             }
