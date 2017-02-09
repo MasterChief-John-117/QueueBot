@@ -57,7 +57,7 @@ namespace QueueBot
                         await e.Message.Server.Owner.SendMessage(
                             $"{e.Message.User.Name} has been blacklisted for spam protection. \nIf you feel this was in error, please contact ");
                         MyBot.setOrGetQueue(e);
-                        MyBot.usingq.Remove(e.Message.User.Name);
+                        MyBot.usingq.Remove(e.Message.User.Id);
                     }
                  }
 
