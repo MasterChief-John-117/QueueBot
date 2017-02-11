@@ -255,6 +255,32 @@ namespace QueueBot
 
 
             //MY COMMANDS
+
+
+            discord.GetService<CommandService>().CreateCommand("findUserGlobal")
+                .Parameter("username", ParameterType.Required)
+                .Alias(new string[] {"globalfinduser", "findglobal", "globalfind"})
+                .Hide()
+                .Description("**Owner Only** \n")
+                .Do(async (e) =>
+                {
+                    string name = e.GetArg("username");
+                    string message = FindUser.global(name, e);
+
+                    if (e.Message.User.Id.ToString().Equals(Ids.ownerId)) //if user can ban members
+                    {
+                        await e.Message.Channel.SendMessage(message);
+
+                    }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.User.SendMessage($"You don't have permssions to use that command! (`findUserGlobal`)");
+                    }
+
+                });
+
             discord.GetService<CommandService>()
                 .CreateCommand("listall")
                 .Hide()
