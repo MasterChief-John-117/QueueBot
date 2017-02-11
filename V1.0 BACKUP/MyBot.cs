@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Discord;
 using Discord.Commands;
@@ -368,6 +369,16 @@ namespace QueueBot
                         System.Threading.Thread.Sleep(500);
                         await discord.Disconnect();
                     }
+                });
+
+
+            discord.GetService<CommandService>()
+                .CreateCommand("boop")
+                .Do(async (e) =>
+                {
+                    await e.Message.Channel.SendMessage("_\\*boop!*_");
+                    string path = Path.Combine("img", "boop.jpg");
+                    await e.Message.Channel.SendFile(path);
                 });
 
 
