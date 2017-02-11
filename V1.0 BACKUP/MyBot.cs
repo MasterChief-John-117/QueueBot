@@ -372,18 +372,6 @@ namespace QueueBot
                 });
 
 
-            discord.GetService<CommandService>()
-                .CreateCommand("boop")
-                .Do(async (e) =>
-                {
-                    await e.Message.Channel.SendMessage("_\\*boop!*_");
-                    string path = Path.Combine("img", "boop.jpg");
-                    await e.Message.Channel.SendFile(path);
-                });
-
-
-
-
 
 
             discord.ExecuteAndWait(async () =>
