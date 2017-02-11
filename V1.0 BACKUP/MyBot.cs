@@ -230,6 +230,28 @@ namespace QueueBot
                     }
 
                 });
+            discord.GetService<CommandService>().CreateCommand("findUser")
+                .Parameter("username", ParameterType.Required)
+                .Hide()
+                .Description("**Moderator only** \n")
+                .Do(async (e) =>
+                {
+                    string name = e.GetArg("username");
+                    string message = FindUser.onServer(name, e);
+
+                    if (e.Message.User.ServerPermissions.BanMembers|| e.Message.User.Id.ToString().Equals(Ids.ownerId)) //if user can ban members
+                    {
+                        await e.Message.Channel.SendMessage(message);
+
+                    }
+                    else if (blacklist.Contains(e.Message.User.Id.ToString())) userBlacklist.commandUsed(e);
+                    else
+                    {
+                        await e.Message.Delete();
+                        await e.Message.User.SendMessage($"You don't have permssions to use that command! (`findUser`)");
+                    }
+
+                });
 
 
             //MY COMMANDS
