@@ -12,10 +12,6 @@
         public static string[] contributors = {"227878052791582720"};
     }
 
-    public class allcomms
-    {
-        public static string[] allcoms= {  "qme" + "add" + "queue" + "q" + "up" + "next" + "leave" + "dqme" };
-    }
 }
 
 
