@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using Discord;
 using Discord.Commands;
+using System.Text.RegularExpressions;
+
 
 namespace QueueBot
 {
@@ -237,10 +239,10 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
                     string name = e.GetArg("username");
-                    string message = FindUser.onServer(name, e);
 
                     if (e.Message.User.ServerPermissions.BanMembers|| e.Message.User.Id.ToString().Equals(Ids.ownerId)) //if user can ban members
                     {
+                        string message = FindUser.onServer(name, e);
                         await e.Message.Channel.SendMessage(message);
 
                     }
@@ -265,10 +267,10 @@ namespace QueueBot
                 .Do(async (e) =>
                 {
                     string name = e.GetArg("username");
-                    string message = FindUser.global(name, e);
 
                     if (e.Message.User.Id.ToString().Equals(Ids.ownerId)) //if user can ban members
                     {
+                        string message = FindUser.global(name, e);
                         await e.Message.Channel.SendMessage(message);
 
                     }
@@ -432,7 +434,10 @@ namespace QueueBot
         //Conole logging
         public void Log(object sender, LogMessageEventArgs e)
         {
-            Console.WriteLine(DateTime.Now + ": " + e.Message);
+            if (!e.Message.ToLower().Contains("reaction"))
+            {
+                Console.WriteLine(DateTime.Now + ": " + e.Message);
+            }
         }
 
         //select queue from Dictionary
