@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Discord;
@@ -416,6 +417,7 @@ namespace QueueBot
                     if (Ids.ownerId == e.Message.User.Id.ToString())
                     {
                         await e.Message.Channel.SendMessage("Reloading configs, be back soon! :wave:");
+                        Process.Start("QueueBot.exe");
                         System.Threading.Thread.Sleep(500);
                         await discord.Disconnect();
                     }
