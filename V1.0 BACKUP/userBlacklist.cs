@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Timers;
 using Discord;
 using Discord.Commands;
+using Newtonsoft;
 
 namespace QueueBot
 
@@ -25,10 +27,6 @@ namespace QueueBot
         public static void sendOut(Object source, ElapsedEventArgs e) //export blacklist every n seconds
         {
             string[] list = MyBot.blacklist.ToArray(); //convert to array of strings
-            /*foreach (string str in list)
-            {
-                if (!MyBot.blacklist.Contains(str)) MyBot.blackused.Add(str, 0); commented for testing, CHECK IF CAUSE BORK
-            }*/
             System.IO.File.WriteAllLines(@"blacklist.txt", list); //export to text
             //Console.WriteLine(DateTime.Now + " Blacklist updated with " + MyBot.blacklist.Count + " users");
         }

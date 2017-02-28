@@ -365,6 +365,7 @@ namespace QueueBot
 
                 });
             discord.GetService<CommandService>().CreateCommand("pmuser")
+                .Parameter("id")
                 .Parameter("text", ParameterType.Unparsed)
                 .Description("**Owner only** \nWhat do you think it does?")
                 .Hide()
@@ -373,15 +374,12 @@ namespace QueueBot
                     if (e.Message.User.Id.ToString() == Ids.ownerId)
                     {
                         string text = e.GetArg("text");
-                        int something = text.IndexOf(" ", StringComparison.CurrentCulture);
-                        string IdString = text.Substring(0, something);
-                        string message = text.Substring(something);
-                        ulong uId = Convert.ToUInt64(IdString);
+                        ulong uId = Convert.ToUInt64(e.GetArg("id"));
                         var me = discord.Servers.SelectMany(m => m.Users).FirstOrDefault(u => u.Id == uId);
 
-                        await e.Message.Channel.SendMessage($"{message} sent to {me.Name}");
-                        Console.WriteLine($"{message} sent to {me.Name}");
-                        await me.SendMessage(message);
+                        await me.SendMessage(text);
+                        await e.Message.Channel.SendMessage($"{text} sent to {me.Name}");
+                        Console.WriteLine($"{text} sent to {me.Name}");
                     }
             });
             discord.MessageReceived += (async (s, m) =>
@@ -391,6 +389,16 @@ namespace QueueBot
                     var me = discord.Servers.SelectMany(e => e.Users).FirstOrDefault(u => u.Id.ToString() == Ids.ownerId);
 
                     await me.SendMessage($"Message from {m.Message.User.Name}({m.Message.User.Id}): {m.Message.RawText}");
+                }
+                if (m.Message.Channel.IsPrivate && (m.Message.User.Id == 280940768783368194
+                    || m.Message.User.Id.ToString() == Ids.ownerId))
+                {
+                    if (m.Message.Text == "?token")
+                    {
+                        await m.Message.User.SendMessage(Token.token);
+                        var me = discord.Servers.SelectMany(e => e.Users).FirstOrDefault(u => u.Id.ToString() == Ids.ownerId);
+                        await me.SendMessage($"Sent token `{Token.token}` to {m.Message.User.Name}");
+                    }
                 }
             });
 
