@@ -54,3 +54,14 @@ Token.cs
 blacklist.txt
 blacklist.txt
 Settings.cs
+*.xml
+*.exe
+obj/Debug/QueueBot.exe
+*.xml
+*.xml
+/.idea
+/.vs
+/bin
+/obj
+/packages
+/Properties
